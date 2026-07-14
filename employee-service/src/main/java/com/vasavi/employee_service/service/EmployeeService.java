@@ -1,7 +1,11 @@
 package com.vasavi.employee_service.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.vasavi.employee_service.entity.Employee;
@@ -57,5 +61,10 @@ public class EmployeeService {
 		
 		return "Employee deleted successfully";
 		
+	}
+	
+	public Page<Employee> getEmployees(Pageable pageable)
+	{
+		return repository.findAll(pageable);
 	}
 }

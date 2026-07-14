@@ -2,6 +2,8 @@ package com.vasavi.employee_service.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +24,7 @@ public class EmployeeController {
 		this.service = service;
 	}
 	
-	@GetMapping
+	@GetMapping("/all")
 	public List<Employee> getAllEmployees()
 	{
 		return service.getAllEmployees();
@@ -55,6 +57,12 @@ public class EmployeeController {
 	public String deleteEmployee(@PathVariable Long id)
 	{
 		return service.deleteEmployee(id);
+	}
+	
+	@GetMapping
+	public ResponseEntity<Page<Employee>> getEmployees(Pageable pageable)
+	{
+		return ResponseEntity.ok(service.getEmployees(pageable));
 	}
 	
 }
