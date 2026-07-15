@@ -60,6 +60,13 @@
 		        spring-boot-starter-validation
 		    </artifactId>
 		</dependency>
+		<depenency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-devtools</artifactId>
+		<scope>runtime</scope>
+		<optional>true</optional>
+			<version>4.0.6</version>
+		</depenency>
 	</dependencies>
 
 	<build>
