@@ -18,6 +18,16 @@ public class GlobalExceptionHandler {
 		ex.getBindingResult().getFieldErrors().forEach(error -> {
 			errors.put(error.getField(), error.getDefaultMessage());
 		});
+		
 		return errors;
+	}
+	
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler(EmployeeNotFoundException.class)
+	public Map<String, String> handleEmployeeNotFound(EmployeeNotFoundException ex)
+	{
+		Map<String, String> error = new HashMap<>();
+		error.put("message", ex.getMessage());
+		return error;
 	}
 }
