@@ -1,12 +1,16 @@
 package com.vasavi.employee_service.entity;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="employees")
 public class Employee {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -16,8 +20,17 @@ public class Employee {
 	private String email;
 	
 	private Double salary;
+	
+	@CreationTimestamp
+	private LocalDateTime createdAt;
+	
+	@UpdateTimestamp
+	private LocalDateTime updatedAt;
 
+	
+	
 	public Employee() {
+		super();
 	}
 
 	public Long getId() {
@@ -51,8 +64,22 @@ public class Employee {
 	public void setSalary(Double salary) {
 		this.salary = salary;
 	}
-	
-	
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 	
 	
 }

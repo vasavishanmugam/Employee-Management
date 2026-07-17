@@ -2,6 +2,7 @@ package com.vasavi.employee_service.controller;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,44 +20,58 @@ public class EmployeeController {
 
 	
 	private final EmployeeService service;
+	private final ModelMapper modelMapper;
 
-	public EmployeeController(EmployeeService service) {
+	public EmployeeController(EmployeeService service, ModelMapper modelMapper) {
 		this.service = service;
+		this.modelMapper = modelMapper;
 	}
 	
 	@GetMapping("/all")
-	public List<Employee> getAllEmployees()
+	public ResponseEntity<List<Employee>> getAllEmployees()
 	{
-		return service.getAllEmployees();
+	    return ResponseEntity.ok(service.getAllEmployees());
 	}
 	
 	@PostMapping
-	public ResponseEntity<Employee> createEmployee(@Valid @RequestBody EmployeeDto dto)
+	public ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody EmployeeDto dto)
 	{
-		Employee employee = new Employee();
+		Employee employee = modelMapper.map(dto, Employee.class);
 		
-		employee.setName(dto.getName());
-		employee.setEmail(dto.getEmail());
-		employee.setSalary(dto.getSalary());
-		return ResponseEntity.ok(service.saveEmployee(employee));
+		Employee savedEmployee  = service.saveEmployee(employee);
+		
+		EmployeeDto responseDto =
+		        modelMapper.map(savedEmployee, EmployeeDto.class);
+
+		return ResponseEntity.ok(responseDto);
 	}
 	
 	@GetMapping("/{id}")
-	public Employee getEmployeeById(@PathVariable Long id)
+	public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id)
 	{
-		return service.getEmployeeById(id);
+		Employee employee = service.getEmployeeById(id);
+		
+		EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
+		
+		return ResponseEntity.ok(dto);
 	}
 	
 	@PutMapping("/{id}")
-	public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee)
+	public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDto dto)
 	{
-		return service.updateEmployee(id, employee);
+		Employee employee = modelMapper.map(dto, Employee.class);
+		
+		Employee updatedEmployee = service.updateEmployee(id, employee);
+		
+		EmployeeDto responseDto = modelMapper.map(updatedEmployee, EmployeeDto.class);
+
+		return ResponseEntity.ok(responseDto);
 	}
 	
 	@DeleteMapping("/{id}")
-	public String deleteEmployee(@PathVariable Long id)
+	public ResponseEntity<String> deleteEmployee(@PathVariable Long id)
 	{
-		return service.deleteEmployee(id);
+		return ResponseEntity.ok(service.deleteEmployee(id));
 	}
 	
 	@GetMapping

@@ -1,6 +1,7 @@
 package com.vasavi.employee_service.exception;
 
-public class EmployeeNotFoundException extends RuntimeException {
+public final class EmployeeNotFoundException extends RuntimeException {
+    private static final long serialVersionUID = 1L;
 
 	public EmployeeNotFoundException(String message)
 	{
