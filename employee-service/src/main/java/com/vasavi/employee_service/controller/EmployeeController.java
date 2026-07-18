@@ -3,6 +3,7 @@ package com.vasavi.employee_service.controller;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -75,7 +76,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<Page<Employee>> getEmployees(Pageable pageable)
+	public ResponseEntity<Page<Employee>> getEmployees(@ParameterObject Pageable pageable)
 	{
 		return ResponseEntity.ok(service.getEmployees(pageable));
 	}
