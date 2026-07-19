@@ -10,4 +10,5 @@ import com.vasavi.employee_service.entity.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 	List<Employee> findByNameContainingIgnoreCase(String name);
+	List<Employee> findByEmailContainingIgnoreCase(String email);
 }

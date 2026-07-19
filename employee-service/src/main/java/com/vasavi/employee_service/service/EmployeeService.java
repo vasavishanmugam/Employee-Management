@@ -112,4 +112,16 @@ public class EmployeeService {
 
 	    return employeePage;
 	}
+	
+	public List<Employee> searchByName(String name)
+	{
+		logger.info("Searching employees with name {}", name);
+		return repository.findByNameContainingIgnoreCase(name);
+	}
+	
+	public List<Employee> searchByEmail(String email)
+	{
+		logger.info("Searching employees with email {}", email);
+		return repository.findByEmailContainingIgnoreCase(email);
+	}
 }
