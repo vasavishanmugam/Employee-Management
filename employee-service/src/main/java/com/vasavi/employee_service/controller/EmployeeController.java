@@ -7,6 +7,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import com.vasavi.employee_service.dto.EmployeeDto;
@@ -81,4 +82,21 @@ public class EmployeeController {
 		return ResponseEntity.ok(service.getEmployees(pageable));
 	}
 	
+	@GetMapping("search/name")
+	public ResponseEntity<List<Employee>> searchByName(@RequestParam String name)
+	{
+		return ResponseEntity.ok(service.searchByName(name));
+	}
+	
+	@GetMapping("search/email")
+	public ResponseEntity<List<Employee>> searchByEmail(@RequestParam String email)
+	{
+		return ResponseEntity.ok(service.searchByEmail(email));
+	}
+	
+	@GetMapping("/salary")
+	public ResponseEntity<List<Employee>> getEmployeesWithGreaterThan(@RequestParam Double salary)
+	{
+		return ResponseEntity.ok(service.getEmployeeSalaryGreaterThan(salary));
+	}
 }
