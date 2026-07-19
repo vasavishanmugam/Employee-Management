@@ -124,4 +124,10 @@ public class EmployeeService {
 		logger.info("Searching employees with email {}", email);
 		return repository.findByEmailContainingIgnoreCase(email);
 	}
+	
+	public List<Employee> getEmployeeSalaryGreaterThan(Double salary)
+	{
+		logger.info("Fetching employees with salary greate than {}", salary);
+		return repository.findEmployeesWithSalaryGreaterThan(salary);
+	}
 }

@@ -93,4 +93,10 @@ public class EmployeeController {
 	{
 		return ResponseEntity.ok(service.searchByEmail(email));
 	}
+	
+	@GetMapping("/salary")
+	public ResponseEntity<List<Employee>> getEmployeesWithGreaterThan(@RequestParam Double salary)
+	{
+		return ResponseEntity.ok(service.getEmployeeSalaryGreaterThan(salary));
+	}
 }
