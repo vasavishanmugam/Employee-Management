@@ -136,4 +136,15 @@ public class EmployeeService {
 		logger.info("Fetching employees using native query");
 		return repository.findEmployeesWithSalaryGreaterThanNative(salary);
 	}
+	
+	public String udpateSalary(Long id, Double salary)
+	{
+		int rows = repository.udpateEmployeeSalary(id, salary);
+		if (rows == 0)
+		{
+			throw new EmployeeNotFoundException("Employee not found with id "+ id);
+		}
+		
+		return "Salary updated successfully";
+	}
 }

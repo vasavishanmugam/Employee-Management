@@ -1,7 +1,6 @@
 package com.vasavi.employee_service.exception;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class ApiError {
 
