@@ -2,9 +2,7 @@ name: Spring Boot CI
 
 on:
   push:
-    branches: [main]
   pull_request:
-    branches: [main]
 
 jobs:
   build:
@@ -24,6 +22,9 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: maven
+
+      - name: Verify Maven Installation
+        run: mvn -version
 
       - name: Build Project
         run: mvn clean package
