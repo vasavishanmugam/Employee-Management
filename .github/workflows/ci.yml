@@ -1,24 +1,50 @@
-name: Java CI
+name: Spring Boot + React CI
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout source code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java
+      # Setup Java
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
+          cache: maven
 
-      - name: Build with Maven
-        run: mvn clean install
+      # Build Spring Boot
+      - name: Build Backend
+        run: |
+          cd backend
+          mvn clean install
+
+      # Setup Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      # Install React dependencies
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      # Build React
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build
