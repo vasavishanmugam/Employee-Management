@@ -130,4 +130,10 @@ public class EmployeeService {
 		logger.info("Fetching employees with salary greate than {}", salary);
 		return repository.findEmployeesWithSalaryGreaterThan(salary);
 	}
+	
+	public List<Employee> getEmployeesWithSalaryGreaterThanNative(Double salary)
+	{
+		logger.info("Fetching employees using native query");
+		return repository.findEmployeesWithSalaryGreaterThanNative(salary);
+	}
 }
