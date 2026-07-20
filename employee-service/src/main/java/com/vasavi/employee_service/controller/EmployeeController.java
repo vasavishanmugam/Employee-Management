@@ -7,7 +7,6 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import com.vasavi.employee_service.dto.EmployeeDto;
@@ -98,5 +97,17 @@ public class EmployeeController {
 	public ResponseEntity<List<Employee>> getEmployeesWithGreaterThan(@RequestParam Double salary)
 	{
 		return ResponseEntity.ok(service.getEmployeeSalaryGreaterThan(salary));
+	}
+	
+	@GetMapping("/salary/native")
+	public ResponseEntity<List<Employee>> getEmployeesWithGreaterThanNative(@RequestParam Double salary)
+	{
+		return ResponseEntity.ok(service.getEmployeesWithSalaryGreaterThanNative(salary));
+	}
+	
+	@GetMapping("/{id}/salary")
+	public ResponseEntity<String> updateSalary(@PathVariable Long id, @RequestParam Double salary)
+	{
+		return ResponseEntity.ok(service.udpateSalary(id, salary));
 	}
 }
