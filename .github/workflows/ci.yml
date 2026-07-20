@@ -2,11 +2,9 @@ name: Spring Boot CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build:
@@ -17,7 +15,7 @@ jobs:
         working-directory: employee-service
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up Java 21
@@ -27,5 +25,8 @@ jobs:
           java-version: '21'
           cache: maven
 
-      - name: Build and Test
-        run: mvn clean verify
+      - name: Build Project
+        run: mvn clean package
+
+      - name: Run Tests
+        run: mvn test
