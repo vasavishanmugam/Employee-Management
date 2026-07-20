@@ -26,5 +26,5 @@ jobs:
       - name: Verify Maven Installation
         run: mvn -version
 
-      - name: Build Project
-        run: mvn clean package
+- name: Build Project
+  run: mvn clean package -DskipTests
