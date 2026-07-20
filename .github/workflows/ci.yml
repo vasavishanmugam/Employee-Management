@@ -23,5 +23,11 @@ jobs:
           java-version: '21'
           cache: maven
 
+      - name: Verify Java Installation
+        run: java -version
+
+      - name: Verify Maven Installation
+        run: mvn -version
+
       - name: Build Project
         run: mvn clean package -DskipTests
