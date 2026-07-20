@@ -99,4 +99,10 @@ public class EmployeeController {
 	{
 		return ResponseEntity.ok(service.getEmployeeSalaryGreaterThan(salary));
 	}
+	
+	@GetMapping("/salary/native")
+	public ResponseEntity<List<Employee>> getEmployeesWithGreaterThanNative(@RequestParam Double salary)
+	{
+		return ResponseEntity.ok(service.getEmployeesWithSalaryGreaterThanNative(salary));
+	}
 }
