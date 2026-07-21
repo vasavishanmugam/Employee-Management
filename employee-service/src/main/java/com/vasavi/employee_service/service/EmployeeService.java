@@ -2,6 +2,7 @@ package com.vasavi.employee_service.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,8 @@ import java.util.List;
 import com.vasavi.employee_service.entity.Employee;
 import com.vasavi.employee_service.exception.EmployeeNotFoundException;
 import com.vasavi.employee_service.repository.EmployeeRepository;
+import com.vasavi.employee_service.specification.EmployeeSpecification;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -146,5 +149,18 @@ public class EmployeeService {
 		}
 		
 		return "Salary updated successfully";
+	}
+	
+	public List<Employee> searchEmployeesByName(String name)
+	{
+		Specification<Employee> specification = EmployeeSpecification.hasName(name);
+		
+		return repository.findAll(specification);
+	}
+	
+	public List<Employee> searchEmployees(String name, String email)
+	{
+		Specification<Employee> specification = EmployeeSpecification.hasEmail(name).and(EmployeeSpecification.hasEmail(email));
+		return repository.findAll(specification);
 	}
 }

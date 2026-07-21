@@ -3,6 +3,7 @@ package com.vasavi.employee_service.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +13,7 @@ import com.vasavi.employee_service.entity.Employee;
 import jakarta.transaction.Transactional;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
 	List<Employee> findByNameContainingIgnoreCase(String name);
 	
 	List<Employee> findByEmailContainingIgnoreCase(String email);
