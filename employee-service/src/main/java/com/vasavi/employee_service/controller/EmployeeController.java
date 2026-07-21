@@ -110,4 +110,10 @@ public class EmployeeController {
 	{
 		return ResponseEntity.ok(service.udpateSalary(id, salary));
 	}
+	
+	@GetMapping("/filter")
+	public ResponseEntity<List<Employee>> searchEmployees(@RequestParam String name, @RequestParam String email)
+	{
+		return ResponseEntity.ok(service.searchEmployees(name, email));
+	}
 }
