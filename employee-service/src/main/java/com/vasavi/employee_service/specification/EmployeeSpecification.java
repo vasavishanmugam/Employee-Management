@@ -19,4 +19,10 @@ public static Specification<Employee> hasEmail(String email)
 			criteriaBuilder.lower(root.get("email")),
 			"%" + email.toLowerCase() + "%");
 }
+
+public static Specification<Employee> hasSalary(Double salary)
+{
+	return (root, query, criteriaBuilder) ->
+	criteriaBuilder.equal(root.get("salary"), salary);
+}
 }
