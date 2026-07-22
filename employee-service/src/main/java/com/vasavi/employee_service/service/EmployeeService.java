@@ -158,9 +158,23 @@ public class EmployeeService {
 		return repository.findAll(specification);
 	}
 	
-	public List<Employee> searchEmployees(String name, String email)
+	public List<Employee> searchEmployees(String name, String email, Double salary)
 	{
-		Specification<Employee> specification = EmployeeSpecification.hasEmail(name).and(EmployeeSpecification.hasEmail(email));
+		Specification<Employee> specification = Specification.where(null);
+		if (name != null && !name.isBlank())
+		{
+			specification = specification.and(EmployeeSpecification.hasName(name));
+		}
+		
+		if (email != null && !email.isBlank())
+		{
+			specification = specification.and(EmployeeSpecification.hasEmail(email));
+		}
+		
+		if (salary != null)
+		{
+			specification = specification.and(EmployeeSpecification.hasSalary(salary));
+		}
 		return repository.findAll(specification);
 	}
 }

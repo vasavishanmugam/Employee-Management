@@ -112,8 +112,10 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/filter")
-	public ResponseEntity<List<Employee>> searchEmployees(@RequestParam String name, @RequestParam String email)
+	public ResponseEntity<List<Employee>> searchEmployees(@RequestParam(required=false) String name,
+			@RequestParam(required=false) String email,
+			@RequestParam(required=false) Double salary)
 	{
-		return ResponseEntity.ok(service.searchEmployees(name, email));
+		return ResponseEntity.ok(service.searchEmployees(name, email, salary));
 	}
 }
