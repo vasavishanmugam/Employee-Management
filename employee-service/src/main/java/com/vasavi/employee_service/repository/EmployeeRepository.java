@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.vasavi.employee_service.entity.Employee;
+import com.vasavi.employee_service.projection.EmployeeNameEmailProjection;
+
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -29,4 +31,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 	@Transactional
 	@Query("UPDATE Employee e SET e.salary = :salary WHERE e.id = :id")
 	int udpateEmployeeSalary(@Param("id") Long id, @Param("salary") Double salary);
+	
+	List<EmployeeNameEmailProjection> findBy(); 
 }

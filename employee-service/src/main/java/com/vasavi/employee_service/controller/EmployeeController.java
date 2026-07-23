@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.vasavi.employee_service.dto.EmployeeDto;
 import com.vasavi.employee_service.entity.Employee;
+import com.vasavi.employee_service.projection.EmployeeNameEmailProjection;
 import com.vasavi.employee_service.service.EmployeeService;
 
 import jakarta.validation.Valid;
@@ -112,8 +113,17 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/filter")
-	public ResponseEntity<List<Employee>> searchEmployees(@RequestParam String name, @RequestParam String email)
+	public ResponseEntity<Page<Employee>> searchEmployees(@RequestParam(required=false) String name,
+			@RequestParam(required=false) String email,
+			@RequestParam(required=false) Double salary,
+			Pageable pageable)
 	{
-		return ResponseEntity.ok(service.searchEmployees(name, email));
+		return ResponseEntity.ok(service.searchEmployees(name, email, salary, pageable));
+	}
+	
+	@GetMapping("/projection")
+	public ResponseEntity<List<EmployeeNameEmailProjection>> getEmployeeNameAndEmail()
+	{
+		return ResponseEntity.ok(service.getEmployeeNameAndEmail());
 	}
 }

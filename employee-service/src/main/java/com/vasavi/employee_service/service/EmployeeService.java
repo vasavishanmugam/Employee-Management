@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.vasavi.employee_service.entity.Employee;
 import com.vasavi.employee_service.exception.EmployeeNotFoundException;
+import com.vasavi.employee_service.projection.EmployeeNameEmailProjection;
 import com.vasavi.employee_service.repository.EmployeeRepository;
 import com.vasavi.employee_service.specification.EmployeeSpecification;
 
@@ -158,9 +159,28 @@ public class EmployeeService {
 		return repository.findAll(specification);
 	}
 	
-	public List<Employee> searchEmployees(String name, String email)
+	public Page<Employee> searchEmployees(String name, String email, Double salary, Pageable pageable)
 	{
-		Specification<Employee> specification = EmployeeSpecification.hasEmail(name).and(EmployeeSpecification.hasEmail(email));
-		return repository.findAll(specification);
+		Specification<Employee> specification = Specification.where(null);
+		if (name != null && !name.isBlank())
+		{
+			specification = specification.and(EmployeeSpecification.hasName(name));
+		}
+		
+		if (email != null && !email.isBlank())
+		{
+			specification = specification.and(EmployeeSpecification.hasEmail(email));
+		}
+		
+		if (salary != null)
+		{
+			specification = specification.and(EmployeeSpecification.hasSalary(salary));
+		}
+		return repository.findAll(specification, pageable);
+	}
+	
+	public List<EmployeeNameEmailProjection> getEmployeeNameAndEmail()
+	{
+		return repository.findBy();
 	}
 }
