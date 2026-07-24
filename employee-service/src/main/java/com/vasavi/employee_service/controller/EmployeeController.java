@@ -13,6 +13,7 @@ import com.vasavi.employee_service.dto.EmployeeDto;
 import com.vasavi.employee_service.entity.Employee;
 import com.vasavi.employee_service.projection.EmployeeNameEmailProjection;
 import com.vasavi.employee_service.service.EmployeeService;
+import com.vasavi.employee_service.transaction.TransactionDemoService;
 
 import jakarta.validation.Valid;
 
@@ -23,10 +24,12 @@ public class EmployeeController {
 	
 	private final EmployeeService service;
 	private final ModelMapper modelMapper;
-
-	public EmployeeController(EmployeeService service, ModelMapper modelMapper) {
+	private final TransactionDemoService transactionDemoService;
+	
+	public EmployeeController(EmployeeService service, ModelMapper modelMapper, TransactionDemoService transactionDemoService) {
 		this.service = service;
 		this.modelMapper = modelMapper;
+		this.transactionDemoService = transactionDemoService;
 	}
 	
 	@GetMapping("/all")
@@ -125,5 +128,12 @@ public class EmployeeController {
 	public ResponseEntity<List<EmployeeNameEmailProjection>> getEmployeeNameAndEmail()
 	{
 		return ResponseEntity.ok(service.getEmployeeNameAndEmail());
+	}
+	
+	@GetMapping("/transaction")
+	public String testTransaction()
+	{
+		transactionDemoService.demoTransaction();
+		return "Transaction success";
 	}
 }
