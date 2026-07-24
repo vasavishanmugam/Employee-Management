@@ -1,5 +1,7 @@
 package com.vasavi.employee_service.controller;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -13,6 +15,7 @@ import com.vasavi.employee_service.dto.EmployeeDto;
 import com.vasavi.employee_service.entity.Employee;
 import com.vasavi.employee_service.projection.EmployeeNameEmailProjection;
 import com.vasavi.employee_service.service.EmployeeService;
+import com.vasavi.employee_service.service.FileStorageService;
 import com.vasavi.employee_service.transaction.TransactionDemoService;
 
 import jakarta.validation.Valid;
@@ -25,11 +28,16 @@ public class EmployeeController {
 	private final EmployeeService service;
 	private final ModelMapper modelMapper;
 	private final TransactionDemoService transactionDemoService;
+	private final FileStorageService fileStorageService;
 	
-	public EmployeeController(EmployeeService service, ModelMapper modelMapper, TransactionDemoService transactionDemoService) {
+	public EmployeeController(EmployeeService service, 
+			ModelMapper modelMapper,
+			TransactionDemoService transactionDemoService,
+			FileStorageService fileStorageService) {
 		this.service = service;
 		this.modelMapper = modelMapper;
 		this.transactionDemoService = transactionDemoService;
+		this.fileStorageService = fileStorageService;
 	}
 	
 	@GetMapping("/all")
@@ -135,5 +143,12 @@ public class EmployeeController {
 	{
 		transactionDemoService.demoTransaction();
 		return "Transaction success";
+	}
+	
+	@PostMapping("/upload")
+	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException
+	{
+		String fileName = fileStorageService.saveFile(file);
+		return ResponseEntity.ok("File uploaded successfully: "+ fileName);
 	}
 }
