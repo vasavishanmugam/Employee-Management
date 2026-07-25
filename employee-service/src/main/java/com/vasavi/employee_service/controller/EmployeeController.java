@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 import com.vasavi.employee_service.dto.EmployeeDto;
 import com.vasavi.employee_service.entity.Employee;
+import com.vasavi.employee_service.payload.ApiResponse;
 import com.vasavi.employee_service.projection.EmployeeNameEmailProjection;
 import com.vasavi.employee_service.service.EmployeeService;
 import com.vasavi.employee_service.service.FileStorageService;
 import com.vasavi.employee_service.transaction.TransactionDemoService;
+import com.vasavi.employee_service.util.ResponseUtil;
 
 import org.springframework.http.MediaType;
 import org.springframework.core.io.Resource;
@@ -47,13 +49,17 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<Employee>> getAllEmployees()
+	public ResponseEntity<ApiResponse<List<Employee>>> getAllEmployees()
 	{
-	    return ResponseEntity.ok(service.getAllEmployees());
+		List<Employee> employees = service.getAllEmployees();
+
+	    return ResponseUtil.success(
+	            "Employees fetched successfully",
+	            employees);
 	}
 	
 	@PostMapping
-	public ResponseEntity<EmployeeDto> createEmployee(@Valid @RequestBody EmployeeDto dto)
+	public ResponseEntity<ApiResponse<EmployeeDto>> createEmployee(@Valid @RequestBody EmployeeDto dto)
 	{
 		Employee employee = modelMapper.map(dto, Employee.class);
 		
@@ -62,21 +68,26 @@ public class EmployeeController {
 		EmployeeDto responseDto =
 		        modelMapper.map(savedEmployee, EmployeeDto.class);
 
-		return ResponseEntity.ok(responseDto);
+		return ResponseUtil.success(
+	            "Employee created successfully",
+	            responseDto);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id)
+	public ResponseEntity<ApiResponse<EmployeeDto>> getEmployeeById(@PathVariable Long id)
 	{
 		Employee employee = service.getEmployeeById(id);
 		
 		EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
 		
-		return ResponseEntity.ok(dto);
+		
+		return ResponseUtil.success(
+		        "Employee fetched successfully",
+		        dto);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDto dto)
+	public ResponseEntity<ApiResponse<EmployeeDto>> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDto dto)
 	{
 		Employee employee = modelMapper.map(dto, Employee.class);
 		
@@ -84,13 +95,19 @@ public class EmployeeController {
 		
 		EmployeeDto responseDto = modelMapper.map(updatedEmployee, EmployeeDto.class);
 
-		return ResponseEntity.ok(responseDto);
+		return ResponseUtil.success(
+	            "Employee updated successfully",
+	            responseDto);
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteEmployee(@PathVariable Long id)
+	public ResponseEntity<ApiResponse<String>> deleteEmployee(@PathVariable Long id)
 	{
-		return ResponseEntity.ok(service.deleteEmployee(id));
+		String message = service.deleteEmployee(id);
+
+	    return ResponseUtil.success(
+	            message,
+	            null);
 	}
 	
 	@GetMapping
