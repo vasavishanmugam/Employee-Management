@@ -14,6 +14,15 @@ public class EmployeeDto {
 	@NotNull(message = "Salary required")
 	@Positive(message = "Salary must be greate than 0")
 	private Double salary;
+	
+    private String profileImage;
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
+	}
 	public String getName() {
 		return name;
 	}
