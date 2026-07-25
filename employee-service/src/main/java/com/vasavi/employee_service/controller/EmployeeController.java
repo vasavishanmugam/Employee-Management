@@ -145,11 +145,10 @@ public class EmployeeController {
 		return "Transaction success";
 	}
 	
-	@PostMapping("/{id}/profile-image")
-	public ResponseEntity<String> uploadFile(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException
+	@PostMapping("/upload")
+	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException
 	{
 		String fileName = fileStorageService.saveFile(file);
-		service.updateProfileImage(id, fileName);
-		return ResponseEntity.ok("Profile image uploaded successfully.");
+		return ResponseEntity.ok("File uploaded successfully: "+ fileName);
 	}
 }
