@@ -30,7 +30,18 @@ public class Employee {
 	@Column(name ="profile_image")
 	private String profileImage;
 	
+	@Column(name="resume_file")
+	private String resumeFile;
 	
+	
+	public String getResumeFile() {
+		return resumeFile;
+	}
+
+	public void setResumeFile(String resumeFile) {
+		this.resumeFile = resumeFile;
+	}
+
 	public String getProfileImage() {
 		return profileImage;
 	}
