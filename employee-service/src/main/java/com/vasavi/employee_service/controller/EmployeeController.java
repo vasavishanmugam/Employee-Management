@@ -146,10 +146,14 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/{id}/profile-image")
-	public ResponseEntity<String> uploadFile(@PathVariable Long id, @RequestParam("file") MultipartFile file) throws IOException
+	public ResponseEntity<EmployeeDto> uploadProfileImage(@PathVariable Long id,
+			@RequestParam("file") MultipartFile file)
+					throws IOException
 	{
 		String fileName = fileStorageService.saveFile(file);
 		service.updateProfileImage(id, fileName);
-		return ResponseEntity.ok("Profile image uploaded successfully.");
+		Employee employee = service.getEmployeeById(id);
+		EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
+		return ResponseEntity.ok(dto);
 	}
 }
