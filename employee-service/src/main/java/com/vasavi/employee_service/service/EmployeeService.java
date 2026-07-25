@@ -191,4 +191,13 @@ public class EmployeeService {
 		employee.setProfileImage(fileName);
 		repository.save(employee);
 	}
+	
+	public void updateResumeFile(Long id, String fileName)
+	{
+		Employee employee = repository.findById(id)
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: "+ id));
+		
+		employee.setResumeFile(fileName);
+		repository.save(employee);
+	}
 }

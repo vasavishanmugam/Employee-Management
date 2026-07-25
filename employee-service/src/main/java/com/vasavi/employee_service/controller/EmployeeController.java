@@ -2,12 +2,16 @@ package com.vasavi.employee_service.controller;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +22,8 @@ import com.vasavi.employee_service.service.EmployeeService;
 import com.vasavi.employee_service.service.FileStorageService;
 import com.vasavi.employee_service.transaction.TransactionDemoService;
 
+import org.springframework.http.MediaType;
+import org.springframework.core.io.Resource;
 import jakarta.validation.Valid;
 
 @RestController
@@ -155,5 +161,43 @@ public class EmployeeController {
 		Employee employee = service.getEmployeeById(id);
 		EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
 		return ResponseEntity.ok(dto);
+	}
+	
+	@PostMapping("/{id}/resume")
+	public ResponseEntity<EmployeeDto> uploadResume(@PathVariable Long id,
+			@RequestParam("file") MultipartFile file)
+	throws IOException
+	{
+		String fileName = fileStorageService.saveResume(file);
+		service.updateResumeFile(id, fileName);
+		
+		Employee employee = service.getEmployeeById(id);
+		EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
+		return ResponseEntity.ok(dto);	
+	}
+	
+	@GetMapping("/{id}/resume")
+	public ResponseEntity<Resource> downloadResume(@PathVariable Long id) throws IOException
+	{
+		Employee employee = service.getEmployeeById(id);
+		
+		if (employee.getResumeFile() == null)
+		{
+			throw new RuntimeException("Resume not uploaded.");
+		}
+		
+		Path filePath = Paths.get("uploads/resumes/").resolve(employee.getResumeFile());
+		
+		UrlResource resource = new UrlResource(filePath.toUri());
+	
+		if (!resource.exists())
+		{
+		throw new RuntimeException("Resume file not found");
+		}
+		return ResponseEntity.ok()
+				.contentType(MediaType.APPLICATION_PDF)
+				.header(HttpHeaders.CONTENT_DISPOSITION,
+						"attachment; filename=\"" + employee.getResumeFile() + "\"")
+				.body(resource);
 	}
 }

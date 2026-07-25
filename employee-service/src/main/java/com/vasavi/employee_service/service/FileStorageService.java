@@ -25,4 +25,25 @@ public class FileStorageService {
 		file.transferTo(filePath);
 		return fileName;
 	}
+	
+	public String saveResume(MultipartFile file) throws IOException
+	{
+		if (!file.getOriginalFilename().toLowerCase().endsWith(".pdf"))
+		{
+			throw new IllegalArgumentException("Only PDF files are allowed");
+		}
+		
+		String fileName = file.getOriginalFilename();
+		
+		Path uploadPath = Paths.get("uploads/resumes/");
+		
+		if(!Files.exists(uploadPath))
+		{
+			Files.createDirectories(uploadPath);
+		}
+		
+		Path filePath = uploadPath.resolve(fileName);
+		file.transferTo(filePath);
+		return fileName;
+	}
 }
