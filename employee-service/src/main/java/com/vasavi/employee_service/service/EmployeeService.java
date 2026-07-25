@@ -183,4 +183,12 @@ public class EmployeeService {
 	{
 		return repository.findBy();
 	}
+	
+	public void updateProfileImage(Long id, String fileName)
+	{
+		Employee employee = repository.findById(id)
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: "+ id));
+		employee.setProfileImage(fileName);
+		repository.save(employee);
+	}
 }
