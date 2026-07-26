@@ -9,6 +9,8 @@ import com.vasavi.employee_service.entity.User;
 import com.vasavi.employee_service.payload.ApiResponse;
 import com.vasavi.employee_service.service.UserService;
 import com.vasavi.employee_service.util.ResponseUtil;
+import com.vasavi.employee_service.dto.LoginRequest;
+import com.vasavi.employee_service.dto.LoginResponse;
 
 import jakarta.validation.Valid;
 
@@ -36,6 +38,16 @@ public class UserController {
 		
 		responseDto.setPassword(null);
 		return ResponseUtil.success("User registered successfully", responseDto);
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<ApiResponse<LoginResponse>> LoginUser(
+			@Valid @RequestBody LoginRequest request)
+	{
+		String token = userService.loginUser(request);
+		LoginResponse response = new LoginResponse(token);
+		
+		return ResponseUtil.success("Login successful", response);
 	}
 	
 }
