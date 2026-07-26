@@ -21,7 +21,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 	List<Employee> findByEmailContainingIgnoreCase(String email);
 
 	@Query("SELECT e FROM Employee e WHERE e.salary > :salary")
-	List<Employee> findEmployeesWithSalaryGreaterThan(@Param("Salary") Double salary);
+	List<Employee> findEmployeesWithSalaryGreaterThan(@Param("salary") Double salary);
 
 	@Query(
 			value="SELECT * FROM Employees WHERE salary > :salary", nativeQuery=true)
