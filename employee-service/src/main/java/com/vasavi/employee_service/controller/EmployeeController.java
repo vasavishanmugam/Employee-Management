@@ -27,9 +27,12 @@ import com.vasavi.employee_service.util.ResponseUtil;
 import org.springframework.http.MediaType;
 import org.springframework.core.io.Resource;
 import jakarta.validation.Valid;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/employees")
+@Tag(name = "Employee Management", description = "Employee CRUD APIs")
 public class EmployeeController {
 
 	
@@ -48,6 +51,10 @@ public class EmployeeController {
 		this.fileStorageService = fileStorageService;
 	}
 	
+	@Operation(
+		    summary = "Get All Employees",
+		    description = "Returns all employees"
+		)
 	@GetMapping("/all")
 	public ResponseEntity<ApiResponse<List<Employee>>> getAllEmployees()
 	{
@@ -58,6 +65,9 @@ public class EmployeeController {
 	            employees);
 	}
 	
+	@Operation(
+			summary = "Create Employee",
+			description = "Create a new employee in the system")
 	@PostMapping
 	public ResponseEntity<ApiResponse<EmployeeDto>> createEmployee(@Valid @RequestBody EmployeeDto dto)
 	{
@@ -73,6 +83,10 @@ public class EmployeeController {
 	            responseDto);
 	}
 	
+	@Operation(
+		    summary = "Get Employee By Id",
+		    description = "Returns employee details using employee id"
+		)
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<EmployeeDto>> getEmployeeById(@PathVariable Long id)
 	{
@@ -86,6 +100,9 @@ public class EmployeeController {
 		        dto);
 	}
 	
+	@Operation(
+			summary = "Update Employee",
+			description = "Updates employee details")
 	@PutMapping("/{id}")
 	public ResponseEntity<ApiResponse<EmployeeDto>> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDto dto)
 	{
@@ -100,6 +117,10 @@ public class EmployeeController {
 	            responseDto);
 	}
 	
+	@Operation(
+		    summary = "Delete Employee",
+		    description = "Deletes employee by id"
+		)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ApiResponse<String>> deleteEmployee(@PathVariable Long id)
 	{
@@ -110,66 +131,144 @@ public class EmployeeController {
 	            null);
 	}
 	
+	@Operation(
+		    summary = "Get Employees",
+		    description = "Returns paginated employee list"
+		)
 	@GetMapping
-	public ResponseEntity<Page<Employee>> getEmployees(@ParameterObject Pageable pageable)
+	public ResponseEntity<ApiResponse<Page<Employee>>> getEmployees(@ParameterObject Pageable pageable)
 	{
-		return ResponseEntity.ok(service.getEmployees(pageable));
+		Page<Employee> employeePage = service.getEmployees(pageable);
+
+	    return ResponseUtil.success(
+	            "Employees fetched successfully",
+	            employeePage);
 	}
 	
+	@Operation(
+		    summary = "Search Employee By Name",
+		    description = "Returns employees matching the given name"
+		)
 	@GetMapping("search/name")
-	public ResponseEntity<List<Employee>> searchByName(@RequestParam String name)
+	public ResponseEntity<ApiResponse<List<Employee>>> searchByName(@RequestParam String name)
 	{
-		return ResponseEntity.ok(service.searchByName(name));
+		List<Employee> employees = service.searchByName(name);
+
+	    return ResponseUtil.success(
+	            "Employees fetched successfully",
+	            employees);
 	}
 	
+	@Operation(
+		    summary = "Search Employee By Email",
+		    description = "Returns employees matching the given email"
+		)
 	@GetMapping("search/email")
-	public ResponseEntity<List<Employee>> searchByEmail(@RequestParam String email)
+	public ResponseEntity<ApiResponse<List<Employee>>> searchByEmail(@RequestParam String email)
 	{
-		return ResponseEntity.ok(service.searchByEmail(email));
+		List<Employee> employees = service.searchByEmail(email);
+
+	    return ResponseUtil.success(
+	            "Employees fetched successfully",
+	            employees);
 	}
 	
+	@Operation(
+		    summary = "Employees By Salary",
+		    description = "Returns employees whose salary is greater than the given value"
+		)
 	@GetMapping("/salary")
-	public ResponseEntity<List<Employee>> getEmployeesWithGreaterThan(@RequestParam Double salary)
-	{
-		return ResponseEntity.ok(service.getEmployeeSalaryGreaterThan(salary));
+	public ResponseEntity<ApiResponse<List<Employee>>> getEmployeesWithGreaterThan(
+	        @RequestParam Double salary) {
+
+	    List<Employee> employees = service.getEmployeeSalaryGreaterThan(salary);
+
+	    return ResponseUtil.success(
+	            "Employees fetched successfully",
+	            employees);
 	}
 	
+	@Operation(
+		    summary = "Employees By Salary (Native Query)",
+		    description = "Returns employees using a native SQL query"
+		)
 	@GetMapping("/salary/native")
-	public ResponseEntity<List<Employee>> getEmployeesWithGreaterThanNative(@RequestParam Double salary)
+	public ResponseEntity<ApiResponse<List<Employee>>> getEmployeesWithGreaterThanNative(@RequestParam Double salary)
 	{
-		return ResponseEntity.ok(service.getEmployeesWithSalaryGreaterThanNative(salary));
+		List<Employee> employees = service.getEmployeesWithSalaryGreaterThanNative(salary);
+
+	    return ResponseUtil.success(
+	            "Employees fetched successfully",
+	            employees);
 	}
 	
-	@GetMapping("/{id}/salary")
-	public ResponseEntity<String> updateSalary(@PathVariable Long id, @RequestParam Double salary)
+	@Operation(
+		    summary = "Update Employee Salary",
+		    description = "Updates salary of an employee"
+		)
+	@PutMapping("/{id}/salary")
+	public ResponseEntity<ApiResponse<String>> updateSalary(@PathVariable Long id, @RequestParam Double salary)
 	{
-		return ResponseEntity.ok(service.udpateSalary(id, salary));
+		String message = service.udpateSalary(id, salary);
+
+	    return ResponseUtil.success(
+	            message,
+	            null);
 	}
 	
+	@Operation(
+		    summary = "Filter Employees",
+		    description = "Search employees using dynamic filters"
+		)
 	@GetMapping("/filter")
-	public ResponseEntity<Page<Employee>> searchEmployees(@RequestParam(required=false) String name,
+	public ResponseEntity<ApiResponse<Page<Employee>>> searchEmployees(@RequestParam(required=false) String name,
 			@RequestParam(required=false) String email,
 			@RequestParam(required=false) Double salary,
 			Pageable pageable)
 	{
-		return ResponseEntity.ok(service.searchEmployees(name, email, salary, pageable));
+		Page<Employee> employeePage =
+	            service.searchEmployees(name, email, salary, pageable);
+
+	    return ResponseUtil.success(
+	            "Employees fetched successfully",
+	            employeePage);
 	}
 	
+	@Operation(
+		    summary = "Employee Projection",
+		    description = "Returns only employee name and email"
+		)
 	@GetMapping("/projection")
-	public ResponseEntity<List<EmployeeNameEmailProjection>> getEmployeeNameAndEmail()
+	public ResponseEntity<ApiResponse<List<EmployeeNameEmailProjection>>> getEmployeeNameAndEmail()
 	{
-		return ResponseEntity.ok(service.getEmployeeNameAndEmail());
+		List<EmployeeNameEmailProjection> employees =
+	            service.getEmployeeNameAndEmail();
+
+	    return ResponseUtil.success(
+	            "Employees fetched successfully",
+	            employees);
 	}
 	
+	@Operation(
+		    summary = "Transaction Demo",
+		    description = "Demonstrates Spring transaction management"
+		)
 	@GetMapping("/transaction")
-	public String testTransaction()
-	{
-		transactionDemoService.demoTransaction();
-		return "Transaction success";
+	public ResponseEntity<ApiResponse<String>> testTransaction() {
+
+	    transactionDemoService.demoTransaction();
+
+	    return ResponseUtil.success(
+	            "Transaction completed successfully",
+	            null);
 	}
 	
+	@Operation(
+		    summary = "Upload Profile Image",
+		    description = "Uploads employee profile image"
+		)
 	@PostMapping("/{id}/profile-image")
-	public ResponseEntity<EmployeeDto> uploadProfileImage(@PathVariable Long id,
+	public ResponseEntity<ApiResponse<EmployeeDto>> uploadProfileImage(@PathVariable Long id,
 			@RequestParam("file") MultipartFile file)
 					throws IOException
 	{
@@ -177,11 +276,16 @@ public class EmployeeController {
 		service.updateProfileImage(id, fileName);
 		Employee employee = service.getEmployeeById(id);
 		EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
-		return ResponseEntity.ok(dto);
-	}
+		return ResponseUtil.success(
+	            "Profile image uploaded successfully",
+	            dto);	}
 	
+	@Operation(
+		    summary = "Upload Resume",
+		    description = "Uploads employee resume"
+		)
 	@PostMapping("/{id}/resume")
-	public ResponseEntity<EmployeeDto> uploadResume(@PathVariable Long id,
+	public ResponseEntity<ApiResponse<EmployeeDto>> uploadResume(@PathVariable Long id,
 			@RequestParam("file") MultipartFile file)
 	throws IOException
 	{
@@ -190,9 +294,15 @@ public class EmployeeController {
 		
 		Employee employee = service.getEmployeeById(id);
 		EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
-		return ResponseEntity.ok(dto);	
+		return ResponseUtil.success(
+	            "Resume uploaded successfully",
+	            dto);
 	}
 	
+	@Operation(
+		    summary = "Download Resume",
+		    description = "Downloads employee resume"
+		)
 	@GetMapping("/{id}/resume")
 	public ResponseEntity<Resource> downloadResume(@PathVariable Long id) throws IOException
 	{
