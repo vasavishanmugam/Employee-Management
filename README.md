@@ -1,216 +1,94 @@
-# Employee Management System API
+# Employee Management System - Backend
 
-A RESTful Employee Management System developed using Spring Boot and MySQL.
+A production-oriented Employee Management REST API built using Spring Boot.
 
-This project demonstrates real-world backend development concepts including CRUD operations, DTO mapping, validation, exception handling, pagination, sorting, JPQL, native SQL queries, dynamic search using JPA Specifications, and GitHub Actions CI.
+This project demonstrates real-world backend development concepts including CRUD operations, validation, exception handling, file upload, Swagger documentation, and JWT Authentication.
 
 ---
 
 # Tech Stack
 
 - Java 21
-- Spring Boot 3
+- Spring Boot 3.5.x
+- Spring Security
+- JWT Authentication
 - Spring Data JPA
 - Hibernate
 - MySQL
-- Maven
 - ModelMapper
-- Jakarta Validation
 - Swagger (OpenAPI)
-- Git
-- GitHub
-- GitHub Actions
+- Maven
 
 ---
 
 # Features
 
-- Employee CRUD Operations
-- DTO Pattern
-- ModelMapper
+## Employee Management
+
+- Create Employee
+- Update Employee
+- Delete Employee
+- Get Employee By Id
+- Get All Employees
+
+---
+
+## Validation
+
 - Bean Validation
-- Global Exception Handling
-- Logging using SLF4J
+- Custom Validation Messages
+
+---
+
+## Exception Handling
+
+- Global Exception Handler
+- Custom Exception Responses
+
+---
+
+## Pagination & Sorting
+
 - Pagination
 - Sorting
+- Pageable APIs
+
+---
+
+## Search
+
+- Search by Name
+- Search by Email
+- Filter Employees
+
+---
+
+## Database
+
 - JPQL Queries
-- Native SQL Queries
-- Dynamic Search using JPA Specifications
-- Swagger API Documentation
-- GitHub Actions Continuous Integration
+- Native Queries
+- Projection
+- Transactions
 
 ---
 
-# Project Structure
+## File Upload
 
-```
-src
-├── controller
-├── dto
-├── entity
-├── exception
-├── repository
-├── service
-├── specification
-├── config
-└── EmployeeServiceApplication
-```
+### Profile Image
 
----
+- Upload Profile Image
+- Store Images
+- Download Images
 
-# API Endpoints
+### Resume
 
-## Create Employee
-
-```
-POST /employees
-```
-
-## Get Employee by Id
-
-```
-GET /employees/{id}
-```
-
-## Update Employee
-
-```
-PUT /employees/{id}
-```
-
-## Delete Employee
-
-```
-DELETE /employees/{id}
-```
-
-## Get All Employees
-
-```
-GET /employees/all
-```
+- Upload PDF Resume
+- Download Resume
+- PDF Validation
 
 ---
 
-# Pagination
-
-```
-GET /employees?page=0&size=5
-```
-
-Example
-
-```
-GET /employees?page=0&size=5&sort=name,asc
-```
-
----
-
-# Search APIs
-
-### Search by Email
-
-```
-GET /employees/search/email?email=gmail
-```
-
-### Search by Salary
-
-```
-GET /employees/search/salary?salary=50000
-```
-
----
-
-# Dynamic Search (JPA Specification)
-
-### Search by Name
-
-```
-GET /employees/filter?name=vas
-```
-
-### Search by Email
-
-```
-GET /employees/filter?email=gmail
-```
-
-### Search by Salary
-
-```
-GET /employees/filter?salary=50000
-```
-
-### Search by Name & Email
-
-```
-GET /employees/filter?name=vas&email=gmail
-```
-
-### Search by Name & Salary
-
-```
-GET /employees/filter?name=vas&salary=50000
-```
-
-### Search by Email & Salary
-
-```
-GET /employees/filter?email=gmail&salary=50000
-```
-
-### Search by Name, Email & Salary
-
-```
-GET /employees/filter?name=vas&email=gmail&salary=50000
-```
-
----
-
-# Validation
-
-Implemented Bean Validation using Jakarta Validation.
-
-Examples:
-
-- Name cannot be blank.
-- Email must be a valid email.
-- Salary must be greater than zero.
-
----
-
-# Exception Handling
-
-Implemented centralized exception handling using:
-
-- `@RestControllerAdvice`
-- `@ExceptionHandler`
-
-Handled Exceptions:
-
-- EmployeeNotFoundException
-- MethodArgumentNotValidException
-- Validation Errors
-
----
-
-# Logging
-
-Implemented logging using SLF4J.
-
-Logs include:
-
-- Employee Created
-- Employee Updated
-- Employee Deleted
-- Employee Retrieved
-- Employee Search
-- Exception Logs
-
----
-
-# Swagger Documentation
+## API Documentation
 
 Swagger UI
 
@@ -218,108 +96,181 @@ Swagger UI
 http://localhost:8080/swagger-ui/index.html
 ```
 
-OpenAPI Documentation
+---
+
+## Authentication
+
+Implemented using Spring Security + JWT.
+
+### User Registration
 
 ```
-http://localhost:8080/v3/api-docs
+POST /auth/register
+```
+
+### User Login
+
+```
+POST /auth/login
+```
+
+### Protected APIs
+
+All Employee APIs require a valid JWT Bearer Token.
+
+---
+
+# Project Structure
+
+```
+src
+ ├── config
+ ├── controller
+ ├── dto
+ ├── entity
+ ├── exception
+ ├── payload
+ ├── repository
+ ├── security
+ ├── service
+ └── util
 ```
 
 ---
 
-# Continuous Integration
+# Security Flow
 
-GitHub Actions is configured to build the project automatically on every Push and Pull Request.
-
-Current Workflow:
-
-- Checkout Repository
-- Setup Java 21
-- Build using Maven
-
-Build Command
-
-```bash
-mvn clean install -DskipTests
+```
+Client
+   │
+   ▼
+Login API
+   │
+AuthenticationManager
+   │
+AuthenticationProvider
+   │
+CustomUserDetailsService
+   │
+MySQL
+   │
+JWT Token
+   │
+Bearer Token
+   │
+JwtAuthenticationFilter
+   │
+Protected APIs
 ```
 
 ---
 
-# How to Run
+# API Endpoints
 
-## Clone Repository
+## Authentication
 
-```bash
-git clone https://github.com/<your-github-username>/employee-service.git
-```
+| Method | Endpoint |
+|---------|----------|
+| POST | /auth/register |
+| POST | /auth/login |
 
-## Go to Project
+---
 
-```bash
-cd employee-service
-```
+## Employee
 
-## Configure Database
+| Method | Endpoint |
+|---------|----------|
+| GET | /employees |
+| GET | /employees/all |
+| GET | /employees/{id} |
+| POST | /employees |
+| PUT | /employees/{id} |
+| DELETE | /employees/{id} |
 
-Update your MySQL credentials in:
+---
 
-```
-application.properties
-```
+## Resume
 
-Example
+| Method | Endpoint |
+|---------|----------|
+| POST | /employees/{id}/resume |
+| GET | /employees/{id}/resume |
 
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/employee_db
-spring.datasource.username=root
-spring.datasource.password=your_password
-```
+---
 
-## Run Application
+## Profile Image
 
-```bash
-mvn spring-boot:run
-```
+| Method | Endpoint |
+|---------|----------|
+| POST | /employees/{id}/profile-image |
 
 ---
 
 # Learning Outcomes
 
-Through this project, I learned:
-
-- REST API Development
-- Layered Architecture
+- Spring Boot
+- REST APIs
+- Spring Data JPA
+- Hibernate
 - DTO Pattern
-- Bean Validation
+- ModelMapper
+- Validation
 - Global Exception Handling
-- Logging with SLF4J
+- Logging
 - Pagination
 - Sorting
 - JPQL
-- Native SQL Queries
-- Spring Data JPA Specifications
-- Dynamic Query Building
-- Git & GitHub
-- GitHub Actions CI
+- Native Query
+- Projection
+- Transactions
+- Multipart File Upload
+- Swagger
+- Spring Security
+- JWT Authentication
 
 ---
 
-# Upcoming Features
+# Current Status
 
-- Unit Testing (JUnit 5)
-- Mockito
-- Docker
-- Docker Compose
-- Jenkins
-- SonarQube
-- AWS Deployment
-- Microservices
-- Kafka
+✅ Backend Phase 1 Completed
+
+Completed Modules
+
+- CRUD Operations
+- Validation
+- DTO
+- Exception Handling
+- Logging
+- Pagination
+- Sorting
+- Search APIs
+- Native Queries
+- Projection
+- Transactions
+- Resume Upload
+- Profile Image Upload
+- Swagger Documentation
+- Spring Security
+- JWT Authentication
 
 ---
 
-# Author
+# Next Phase
+
+Frontend Development
+
+- React.js
+- Vite
+- Axios
+- React Router
+- JWT Integration
+- Employee Dashboard
+- Authentication UI
+
+---
+
+## Author
 
 **Vasavi S**
 
-GitHub:
-https://github.com/vasavishanmugam
+Backend Developer | Java | Spring Boot | MySQL | Spring Security
