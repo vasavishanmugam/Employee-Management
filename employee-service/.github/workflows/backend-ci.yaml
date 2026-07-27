@@ -30,4 +30,4 @@ jobs:
         run: mvn -version
 
       - name: Build Project
-        run: mvn clean package -DskipTests
+        run: mvn clean verify -DskipTests
