@@ -6,32 +6,36 @@ import './App.css'
 import Welcome from './components/Welcome'
 
 function App() {
-  const [count, setCount] = useState(0);
-  function increase()
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [salary, setSalary] = useState("");
+
+  function handleSubmit(event)
   {
-    setCount(count + 1);
-  }
-  function decrease()
-  {
-    setCount(count - 1);
-  }
-  function reset()
-  {
-    setCount(0);
+    event.preventDefault();
+    console.log("Employee Details");
+    
+    console.log("Name :", name);
+    console.log("Email :", email);
+    console.log("Salary :", salary);
   }
   return (
     <div>
-    <h1>Employee Counter</h1>
-    <h2>{count}</h2>
-    <button onClick={increase}>
-      Increase
-    </button>
-       <button onClick={decrease}>
-      Decrease
-    </button>
-      <button onClick={reset}>
-      Reset
-    </button>
+     <h1>Employee Form</h1>
+     <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="Enter Employee Name" value={name}
+        onChange={(event) => setName(event.target.value)}/>
+        <br /><br />
+        <input type="email" placeholder="Enter Email" value={email}
+        onChange={(event) => setEmail(event.target.value)}/>
+        <br /><br />
+        <input type="number" placeholder="Enter Salary" value={salary}
+        onChange={(event) => setSalary(event.target.value)}/>
+        <hr />
+
+        <br /><br />
+        <button type='submit'>Save Employee</button>
+      </form>
     </div>
   );
 }
