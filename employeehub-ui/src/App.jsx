@@ -6,19 +6,31 @@ import './App.css'
 import Welcome from './components/Welcome'
 
 function App() {
-  function showMessage()
+  const [count, setCount] = useState(0);
+  function increase()
   {
-    alert("Welcome to Employee Management System");
+    setCount(count + 1);
+  }
+  function decrease()
+  {
+    setCount(count - 1);
+  }
+  function reset()
+  {
+    setCount(0);
   }
   return (
     <div>
-    <h1>Employee Management System</h1>
-    <Welcome name="Vasavi"/>
-    <Welcome name="Rahul"/>
-    <Welcome name="Priya"/>
-
-    <button onClick={showMessage}>
-      Click Me
+    <h1>Employee Counter</h1>
+    <h2>{count}</h2>
+    <button onClick={increase}>
+      Increase
+    </button>
+       <button onClick={decrease}>
+      Decrease
+    </button>
+      <button onClick={reset}>
+      Reset
     </button>
     </div>
   );
