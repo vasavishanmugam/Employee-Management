@@ -1,41 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-import Welcome from './components/Welcome'
+import { useEffect } from 'react'
+import api from './services/api';
+
 
 function App() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [salary, setSalary] = useState("");
+  useEffect(() =>{
+    async function fetchEmployees(){
+      try
+      {
+        const response = await api.get("/employees");
+        console.log(response.data);
+      }
+      catch(error)
+      {
+        console.log(error);
+      }
+    }
 
-  function handleSubmit(event)
-  {
-    event.preventDefault();
-    console.log("Employee Details");
-    
-    console.log("Name :", name);
-    console.log("Email :", email);
-    console.log("Salary :", salary);
-  }
-  return (
+    fetchEmployees();
+  }, []);
+
+  return(
     <div>
-     <h1>Employee Form</h1>
-     <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Enter Employee Name" value={name}
-        onChange={(event) => setName(event.target.value)}/>
-        <br /><br />
-        <input type="email" placeholder="Enter Email" value={email}
-        onChange={(event) => setEmail(event.target.value)}/>
-        <br /><br />
-        <input type="number" placeholder="Enter Salary" value={salary}
-        onChange={(event) => setSalary(event.target.value)}/>
-        <hr />
-
-        <br /><br />
-        <button type='submit'>Save Employee</button>
-      </form>
+      <h1>Employee Management System</h1>
     </div>
   );
 }
