@@ -12,7 +12,6 @@ function App() {
       {
         const response = await api.get("/employees");
         setEmployees(response.data.data.content);
-        console.log(response.data.data.content);
       }
       catch(error)
       {
@@ -43,7 +42,7 @@ function App() {
             <td>{employee.id}</td>
             <td>{employee.name}</td>
             <td>{employee.email}</td>
-            <td>₹ {employee.salary}</td>
+            <td>₹ {employee.salary.toLocaleString("en-IN")}</td>
           </tr>
         ))}
       </tbody>
