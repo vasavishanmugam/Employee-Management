@@ -73,3 +73,31 @@ tbody tr:nth-child(even) {
 tbody tr:last-child td {
     border-bottom: none;
 }
+
+/* ===== Search Box ===== */
+
+.search-container {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.search-input {
+    width: 300px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 5px rgba(25, 118, 210, 0.3);
+}
+
+.no-data {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+    padding: 20px;
+}
