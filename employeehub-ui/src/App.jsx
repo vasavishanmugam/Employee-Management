@@ -10,27 +10,26 @@ function App() {
   const [email, SetEmail] = useState("");
   const [salary, SetSalary] = useState("");
 
-  async function fetchEmployees(){
-    try
-    {
-      const response = await api.get("/employees");
-      setEmployees(response.data.data.content);
+  useEffect(() =>{
+    async function fetchEmployees(){
+      try
+      {
+        const response = await api.get("/employees");
+        setEmployees(response.data.data.content);
+      }
+      catch(error)
+      {
+        console.log(error);
+      }
     }
-    catch(error)
-    {
-      console.log(error);
-    }
-  }
 
-  useEffect(() => {
-      fetchEmployees();
-    }, [])
-
+    fetchEmployees();
+  }, []);
 
   const filteredEmployees = employees.filter((employee) =>
-  employee.name.toLowerCase().includes(search.toLowerCase()))
+  employee.name.toLowerCase().includes(search.toLocaleLowerCase()))
 
-  async function handleSubmit()
+  function handleSubmit()
   {
     if(!name.trim())
     {
@@ -53,24 +52,10 @@ function App() {
     const employee = {
       name,
      email,
-      salary: Number(salary)
+      salary
     };
 
-    try{
-      const response = await api.post("/employees", employee);
-      console.log(response.data);
-      alert("Employee Added Successfully");
-
-      SetName("");
-      SetEmail("");
-      SetSalary("");
-      fetchEmployees();
-    }
-    catch(error)
-    {
-      console.log(error);
-      alert("Failed to add employee");
-    }
+    console.log(employee);
   }
 
   return(
