@@ -6,6 +6,9 @@ function App() {
 
   const[employees, setEmployees] = useState([]);
   const [search, setSearch] = useState("");
+  const [name, SetName] = useState("");
+  const [email, SetEmail] = useState("");
+  const [salary, SetSalary] = useState("");
 
   useEffect(() =>{
     async function fetchEmployees(){
@@ -26,8 +29,61 @@ function App() {
   const filteredEmployees = employees.filter((employee) =>
   employee.name.toLowerCase().includes(search.toLocaleLowerCase()))
 
+  function handleSubmit()
+  {
+    if(!name.trim())
+    {
+      alert("Name is required.");
+      return;
+    }
+
+    if (!email.trim())
+    {
+      alert("Email is required.");
+      return;
+    }
+
+    if(!salary)
+    {
+      alert("Salary is required.");
+      return;
+    }
+
+    const employee = {
+      name,
+     email,
+      salary
+    };
+
+    console.log(employee);
+  }
+
   return(
     <div className="container">
+      <div className='form-container'>
+        <input
+        type='text'
+        placeholder='Enter Name'
+        value={name}
+        onChange={(e) => SetName(e.target.value)}
+        />
+        <input
+        type='email'
+        placeholder='Enter Email'
+        value={email}
+        onChange={(e) => SetEmail(e.target.value)}
+        />
+        <input
+        type='number'
+        placeholder='Enter Salary'
+        value={salary}
+        onChange={(e) => SetSalary(e.target.value)}
+        />
+
+        <button onClick={handleSubmit}>Add Employee</button>
+
+      </div>
+
       <div className='search-container'>
         <input
           type='text'
