@@ -5,7 +5,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) =>{
-    const token = "CREDIENTIAL_PASSWORD";
+    const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxhQHR3aXR0ZXIuY29tIiwiaWF0IjoxNzg1NDY2NDI0LCJleHAiOjE3ODU0NzAwMjR9.YM7xQAvbSiZgGdmxwDPySlmte7-GKYeeC_LevmcA-yg";
     config.headers.Authorization = `Bearer ${token}`;
     return config;
 })
