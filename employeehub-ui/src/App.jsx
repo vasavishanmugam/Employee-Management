@@ -58,13 +58,21 @@ function App() {
     };
 
     try{
-      const response = await api.post("/employees", employee);
-      console.log(response.data);
-      alert("Employee Added Successfully");
+      let response;
+      if (editingId)
+      {
+        response = await api.put(`/employees/${editingId}`, employee);
+        alert("Employee Udpated Successfully");
+      }
+      else
+      {
+        response = await api.post("/employees", employee);
+        alert("Employee Added Successfully");
+      }
 
-      SetName("");
-      SetEmail("");
-      SetSalary("");
+      console.log(response.data);
+
+      resetForm();
       fetchEmployees();
     }
     catch(error)
@@ -81,6 +89,19 @@ function App() {
     SetEmail(employee.email);
     SetSalary(employee.salary);
   }
+
+  function resetForm()
+  {
+    SetName("");
+    SetEmail("");
+    SetSalary("");
+
+    SetEditingId(null);
+  }
+
+  function cancelEdit() {
+    resetForm();
+}
 
   return(
     <div className="container">
@@ -105,7 +126,15 @@ function App() {
         />
 
         <button onClick={handleSubmit}>{ editingId ? "Update Employee" : "Add Employee"} </button>
-
+        {editingId && (
+    <button
+        type="button"
+        className="cancel-btn"
+        onClick={cancelEdit}
+    >
+        Cancel
+    </button>
+)}
       </div>
 
       <div className='search-container'>
