@@ -176,3 +176,18 @@ tbody tr:last-child td {
 .cancel-btn:hover {
     background-color: #616161;
 }
+
+.delete-btn{
+    background-color:#e53935;
+    color:white;
+    border:none;
+    padding:8px 15px;
+    margin-left:10px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.delete-btn:hover{
+    background-color:#c62828;
+}

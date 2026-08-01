@@ -72,8 +72,8 @@ function App() {
 
       console.log(response.data);
 
+      await fetchEmployees();
       resetForm();
-      fetchEmployees();
     }
     catch(error)
     {
@@ -101,6 +101,35 @@ function App() {
 
   function cancelEdit() {
     resetForm();
+}
+
+async function deleteEmployee(id)
+{
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this employee?"
+  );
+
+  if (!confirmDelete)
+  {
+    return;
+  }
+
+  try{
+    await api.delete(`/employees/${id}`);
+    alert("Employee deleted successfully.");
+
+    await fetchEmployees();
+    
+    if (search !== "")
+    {
+      setSearch("");
+    }
+  }
+  catch(error)
+  {
+    console.log(error);
+    alert("Failed to delete employee.");
+  }
 }
 
   return(
@@ -173,6 +202,9 @@ function App() {
                 onClick={() => editEmployee(employee)}>
                 Edit
               </button>
+              <button className='delete-btn'
+              onClick={() => deleteEmployee(employee.id)}
+              >Delete</button>
             </td>
           </tr>
         ))
