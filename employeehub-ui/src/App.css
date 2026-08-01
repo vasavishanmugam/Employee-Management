@@ -162,3 +162,17 @@ tbody tr:last-child td {
 .edit-btn:hover {
     background-color: #f57c00;
 }
+
+.cancel-btn {
+    background-color: #757575;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background-color: #616161;
+}
