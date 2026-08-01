@@ -9,6 +9,7 @@ function App() {
   const [name, SetName] = useState("");
   const [email, SetEmail] = useState("");
   const [salary, SetSalary] = useState("");
+  const [editingId, SetEditingId] = useState(null);
 
   async function fetchEmployees(){
     try
@@ -73,6 +74,14 @@ function App() {
     }
   }
 
+  function editEmployee(employee)
+  {
+    SetEditingId(employee.id);
+    SetName(employee.name);
+    SetEmail(employee.email);
+    SetSalary(employee.salary);
+  }
+
   return(
     <div className="container">
       <div className='form-container'>
@@ -95,7 +104,7 @@ function App() {
         onChange={(e) => SetSalary(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>Add Employee</button>
+        <button onClick={handleSubmit}>{ editingId ? "Update Employee" : "Add Employee"} </button>
 
       </div>
 
@@ -117,6 +126,7 @@ function App() {
           <th>Name</th>
           <th>Email</th>
           <th>Salary</th>
+          <th>Action</th>
         </tr>
       </thead>
 
@@ -128,6 +138,13 @@ function App() {
             <td>{employee.name}</td>
             <td>{employee.email}</td>
             <td>₹ {employee.salary.toLocaleString("en-IN")}</td>
+            <td>
+              <button 
+                className='edit-btn'
+                onClick={() => editEmployee(employee)}>
+                Edit
+              </button>
+            </td>
           </tr>
         ))
       ) : (

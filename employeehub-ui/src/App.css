@@ -146,3 +146,19 @@ tbody tr:last-child td {
 .form-container button:hover {
     background-color: #1565c0;
 }
+
+/* Edit Button */
+
+.edit-btn {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-btn:hover {
+    background-color: #f57c00;
+}
