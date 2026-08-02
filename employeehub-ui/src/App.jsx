@@ -12,12 +12,13 @@ function App() {
   const [editingId, SetEditingId] = useState(null);
   const [page, setPage] = useState(0);
   const [size] = useState(5);
-  const [totalPages, setTotalPages] = useState(0);  
+  const [totalPages, setTotalPages] = useState(0);
+  const [sort, setSort] = useState("name,asc");
 
   async function fetchEmployees(){
     try
     {
-      const response = await api.get(`/employees?page=${page}&size=${size}`);
+      const response = await api.get(`/employees?page=${page}&size=${size}&sort=${sort}`);
       setEmployees(response.data.data.content);
       setTotalPages(response.data.data.totalPages);
     }
@@ -29,7 +30,7 @@ function App() {
 
   useEffect(() => {
       fetchEmployees();
-    }, [page])
+    }, [page, sort])
 
 
   const filteredEmployees = employees.filter((employee) =>
@@ -138,6 +139,22 @@ async function deleteEmployee(id)
 
   return(
     <div className="container">
+      <div className='sort-container'>
+        <label>Sort By: </label>
+        <select
+          value={sort}
+          onChange={(e)=> {
+            setSort(e.target.value);
+            setPage(0);
+          }}>
+            <option value="name,asc">Name (A-Z)</option>
+            <option value="name,desc">Name (Z-A)</option>
+            <option value="salary,asc">Salary (Low-High)</option>
+            <option value="salary,desc">Salary (High-Low)</option>
+            <option value="email,asc">Email (A-Z)</option>
+            <option value="email,desc">Email (A-Z)</option>
+          </select>
+      </div>
       <div className='form-container'>
         <input
         type='text'

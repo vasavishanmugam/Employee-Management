@@ -223,3 +223,22 @@ tbody tr:last-child td {
     font-weight: bold;
     color: #333;
 }
+
+.sort-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.sort-container label {
+    font-weight: bold;
+}
+
+.sort-container select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
