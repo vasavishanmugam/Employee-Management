@@ -14,11 +14,18 @@ function App() {
   const [size] = useState(5);
   const [totalPages, setTotalPages] = useState(0);
   const [sort, setSort] = useState("name,asc");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function fetchEmployees(){
     try
     {
-      const response = await api.get(`/employees/filter?name=${search}&page=${page}&size=${size}&sort=${sort}`);
+      setLoading(true);
+
+      const keyword = debouncedSearch.trim();
+
+      const response = await api.get(`/employees/filter?name=${keyword}&page=${page}&size=${size}&sort=${sort}`);
+      
       setEmployees(response.data.data.content);
       setTotalPages(response.data.data.totalPages);
     }
@@ -26,13 +33,25 @@ function App() {
     {
       console.log(error);
     }
+    finally
+    {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
       fetchEmployees();
-    }, [page, sort, search])
+    }, [page, sort, debouncedSearch])
 
+useEffect(() => 
+{
+  const timer = setTimeout(() =>
+  {
+    setDebouncedSearch(search);
+  }, 500);
 
+  return () => clearTimeout(timer);
+}, [search])
   async function handleSubmit()
   {
     if(!name.trim())
@@ -149,7 +168,7 @@ async function deleteEmployee(id)
             <option value="salary,asc">Salary (Low-High)</option>
             <option value="salary,desc">Salary (High-Low)</option>
             <option value="email,asc">Email (A-Z)</option>
-            <option value="email,desc">Email (A-Z)</option>
+            <option value="email,desc">Email (Z-A)</option>
           </select>
       </div>
       <div className='form-container'>
@@ -194,6 +213,9 @@ async function deleteEmployee(id)
           />
       </div>
     <h1 className="title">Employee Management System</h1>
+    {loading && (
+      <p className='loading-text'>Loading Employees...</p>
+    )}
 
     <table>
       <thead>
