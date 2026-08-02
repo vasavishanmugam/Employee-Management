@@ -1,5 +1,6 @@
 package com.vasavi.employee_service.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -7,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+import com.vasavi.employee_service.dto.EmployeeDto;
 import com.vasavi.employee_service.entity.Employee;
 import com.vasavi.employee_service.exception.EmployeeNotFoundException;
 import com.vasavi.employee_service.projection.EmployeeNameEmailProjection;
 import com.vasavi.employee_service.repository.EmployeeRepository;
 import com.vasavi.employee_service.specification.EmployeeSpecification;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +25,8 @@ public class EmployeeService {
 	private final EmployeeRepository repository;
 	
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public EmployeeService(EmployeeRepository repository) {
 		this.repository = repository;
@@ -115,6 +119,19 @@ public class EmployeeService {
 	            employeePage.getTotalElements());
 
 	    return employeePage;
+	}
+	
+	public List<EmployeeDto> searchEmployees(String  keyword)
+	{
+		logger.info("Searching employees with keyword: {}", keyword);
+		
+		List<Employee> employees = repository.findByNameContainingIgnoreCase(keyword);
+		
+		logger.info("Found {} matching employees", employees.size());
+		
+		return employees.stream()
+				.map(employee -> modelMapper.map(employee, EmployeeDto.class))
+				.toList();
 	}
 	
 	public List<Employee> searchByName(String name)

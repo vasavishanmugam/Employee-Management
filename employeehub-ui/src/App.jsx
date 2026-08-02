@@ -18,7 +18,7 @@ function App() {
   async function fetchEmployees(){
     try
     {
-      const response = await api.get(`/employees?page=${page}&size=${size}&sort=${sort}`);
+      const response = await api.get(`/employees/filter?name=${search}&page=${page}&size=${size}&sort=${sort}`);
       setEmployees(response.data.data.content);
       setTotalPages(response.data.data.totalPages);
     }
@@ -30,11 +30,8 @@ function App() {
 
   useEffect(() => {
       fetchEmployees();
-    }, [page, sort])
+    }, [page, sort, search])
 
-
-  const filteredEmployees = employees.filter((employee) =>
-  employee.name.toLowerCase().includes(search.toLowerCase()))
 
   async function handleSubmit()
   {
@@ -210,8 +207,8 @@ async function deleteEmployee(id)
       </thead>
 
       <tbody>
-        {filteredEmployees.length > 0 ? (
-        filteredEmployees.map((employee) => (
+        {employees.length > 0 ? (
+        employees.map((employee) => (
           <tr key={employee.id}>
             <td>{employee.id}</td>
             <td>{employee.name}</td>

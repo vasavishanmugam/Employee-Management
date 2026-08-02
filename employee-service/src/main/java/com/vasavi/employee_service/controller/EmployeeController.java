@@ -221,7 +221,7 @@ public class EmployeeController {
 		    description = "Search employees using dynamic filters"
 		)
 	@GetMapping("/filter")
-	public ResponseEntity<ApiResponse<Page<Employee>>> searchEmployees(@RequestParam(required=false) String name,
+	public ResponseEntity<ApiResponse<Page<EmployeeDto>>> searchEmployees(@RequestParam(required=false) String name,
 			@RequestParam(required=false) String email,
 			@RequestParam(required=false) Double salary,
 			Pageable pageable)
@@ -229,9 +229,12 @@ public class EmployeeController {
 		Page<Employee> employeePage =
 	            service.searchEmployees(name, email, salary, pageable);
 
+		 Page<EmployeeDto> dtoPage = employeePage.map(employee ->
+         modelMapper.map(employee, EmployeeDto.class));
+		 
 	    return ResponseUtil.success(
 	            "Employees fetched successfully",
-	            employeePage);
+	            dtoPage);
 	}
 	
 	@Operation(
