@@ -10,12 +10,16 @@ function App() {
   const [email, SetEmail] = useState("");
   const [salary, SetSalary] = useState("");
   const [editingId, SetEditingId] = useState(null);
+  const [page, setPage] = useState(0);
+  const [size] = useState(5);
+  const [totalPages, setTotalPages] = useState(0);  
 
   async function fetchEmployees(){
     try
     {
-      const response = await api.get("/employees");
+      const response = await api.get(`/employees?page=${page}&size=${size}`);
       setEmployees(response.data.data.content);
+      setTotalPages(response.data.data.totalPages);
     }
     catch(error)
     {
@@ -25,7 +29,7 @@ function App() {
 
   useEffect(() => {
       fetchEmployees();
-    }, [])
+    }, [page])
 
 
   const filteredEmployees = employees.filter((employee) =>
@@ -215,6 +219,17 @@ async function deleteEmployee(id)
       )}
       </tbody>
     </table>
+    <div className='pagination'>
+      <button 
+      onClick={()=> setPage(page - 1)}
+        disabled={page == 0}  >Previous</button>
+        <span className='page-info'>
+          Page {page + 1} of {totalPages}
+        </span>
+      <button onClick={()=> setPage(page + 1)}
+        disabled={page + 1 >= totalPages}
+      >Next</button>
+    </div>
   </div>
   );
 }
