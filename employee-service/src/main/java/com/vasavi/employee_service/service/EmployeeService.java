@@ -123,6 +123,7 @@ public class EmployeeService {
 	
 	public List<EmployeeDto> searchEmployees(String  keyword)
 	{
+		logger.info("Searching employees with keyword: {}", keyword);
 		
 		List<Employee> employees = repository.findByNameContainingIgnoreCase(keyword);
 		
