@@ -32,5 +32,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 	@Query("UPDATE Employee e SET e.salary = :salary WHERE e.id = :id")
 	int udpateEmployeeSalary(@Param("id") Long id, @Param("salary") Double salary);
 	
-	List<EmployeeNameEmailProjection> findBy(); 
+	List<EmployeeNameEmailProjection> findBy();
 }

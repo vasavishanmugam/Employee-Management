@@ -3,7 +3,9 @@ package com.vasavi.employee_service.dto;
 import jakarta.validation.constraints.*;
 
 public class EmployeeDto {
-
+	
+	private Long id;
+	
 	@NotBlank(message = "Name is required")
 	private String name;
 	
@@ -18,6 +20,14 @@ public class EmployeeDto {
     private String profileImage;
     
 	private String resumeFile;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getResumeFile() {
 		return resumeFile;
