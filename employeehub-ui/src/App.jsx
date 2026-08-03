@@ -221,6 +221,7 @@ async function deleteEmployee(id)
       <thead>
         <tr>
           <th>ID</th>
+          <th>Photo</th>
           <th>Name</th>
           <th>Email</th>
           <th>Salary</th>
@@ -233,6 +234,17 @@ async function deleteEmployee(id)
         employees.map((employee) => (
           <tr key={employee.id}>
             <td>{employee.id}</td>
+            <td>
+              {employee.profileImage ? (
+                <img
+                  src={`http://localhost:8080/uploads/profile/${employee.profileImage}`}
+                  alt={employee.name}
+                  className='profile-image'
+                  />
+              ) : (
+                <span>No Image</span>
+              )}
+            </td>
             <td>{employee.name}</td>
             <td>{employee.email}</td>
             <td>₹ {employee.salary.toLocaleString("en-IN")}</td>
