@@ -12,18 +12,27 @@ import com.vasavi.employee_service.config.FileUploadConfig;
 
 @Service
 public class FileStorageService {
-	public String saveFile(MultipartFile file) throws IOException
-	{
+	
+	private String save(MultipartFile file, String folder) throws IOException {
+
 		String fileName = file.getOriginalFilename();
-		Path uploadPath = Paths.get(FileUploadConfig.UPLOAD_DIR);
+		
+		Path uploadPath = Paths.get(FileUploadConfig.UPLOAD_DIR, folder);
+		
 		if (!Files.exists(uploadPath))
 		{
 			Files.createDirectories(uploadPath);
 		}
 		
 		Path filePath = uploadPath.resolve(fileName);
+		
 		file.transferTo(filePath);
 		return fileName;
+	}
+		
+	public String saveFile(MultipartFile file) throws IOException
+	{
+		return save(file, "profile");
 	}
 	
 	public String saveResume(MultipartFile file) throws IOException
@@ -33,17 +42,6 @@ public class FileStorageService {
 			throw new IllegalArgumentException("Only PDF files are allowed");
 		}
 		
-		String fileName = file.getOriginalFilename();
-		
-		Path uploadPath = Paths.get("uploads/resumes/");
-		
-		if(!Files.exists(uploadPath))
-		{
-			Files.createDirectories(uploadPath);
-		}
-		
-		Path filePath = uploadPath.resolve(fileName);
-		file.transferTo(filePath);
-		return fileName;
+		return save(file, "resume");
 	}
 }
