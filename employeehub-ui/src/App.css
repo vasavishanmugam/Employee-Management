@@ -257,3 +257,17 @@ tbody tr:last-child td {
     object-fit: cover;
     border: 1px solid #ccc;
 }
+
+.view-btn{
+    background-color:#2196F3;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:5px;
+    cursor:pointer;
+    margin-right:8px;
+}
+
+.view-btn:hover{
+    background-color:#1976D2;
+}
