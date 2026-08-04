@@ -1,51 +1,254 @@
+/* ==========================================
+   EMPLOYEE DETAILS PAGE CONTAINER
+========================================== */
+
 .details-container{
-    width:450px;
+    width:500px;
     margin:40px auto;
     padding:30px;
-    text-align:center;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,.2);
-    background:white;
+    background:#ffffff;
+    border-radius:12px;
+    box-shadow:0 4px 15px rgba(0,0,0,.15);
 }
 
+
+/* ==========================================
+   PAGE TITLE
+========================================== */
+
+.details-title{
+    text-align:center;
+    margin-bottom:20px;
+    color:#333;
+}
+
+
+/* ==========================================
+   PROFILE IMAGE
+========================================== */
+
 .details-image{
-    width:140px;
-    height:140px;
+    display:block;
+    width:150px;
+    height:150px;
+    margin:0 auto 20px;
     border-radius:50%;
     object-fit:cover;
     border:3px solid #1976d2;
-    margin-bottom:20px;
 }
+
+
+/* ==========================================
+   EMPLOYEE NAME
+========================================== */
 
 .details-container h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#222;
+}
+
+
+/* ==========================================
+   EMPLOYEE INFORMATION
+========================================== */
+
+.employee-info{
     margin-bottom:20px;
 }
 
-.details-container p{
-    text-align:left;
-    margin:10px 0;
+.employee-info p{
+    margin:12px 0;
+    font-size:18px;
+    color:#444;
 }
 
-.details-container a{
+.employee-info strong{
+    color:#222;
+}
+
+.employee-info a{
     color:#1976d2;
     text-decoration:none;
     font-weight:bold;
 }
 
-.details-container a:hover{
+.employee-info a:hover{
     text-decoration:underline;
 }
 
+
+/* ==========================================
+   SECTION HEADING
+========================================== */
+
+.section-title{
+    text-align:center;
+    color:#555;
+    margin:20px 0;
+}
+
+
+/* ==========================================
+   DIVIDER
+========================================== */
+
+hr{
+    margin:25px 0;
+    border:none;
+    border-top:1px solid #dddddd;
+}
+
+
+/* ==========================================
+   FILE UPLOAD SECTION
+========================================== */
+
+.upload-group{
+    margin-bottom:20px;
+}
+
+.upload-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#333;
+}
+
+
+/* ==========================================
+   FILE INPUT + BUTTON ROW
+========================================== */
+
+.upload-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.upload-row input{
+    flex:1;
+}
+
+
+/* ==========================================
+   COMMON UPLOAD BUTTON
+========================================== */
+
+.upload-btn{
+    width:120px;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    background:#1976d2;
+    color:white;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.upload-btn:hover{
+    background:#1565c0;
+}
+
+
+/* ==========================================
+   ACTION BUTTONS CONTAINER
+========================================== */
+
+.action-buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+    margin-top:25px;
+}
+
+
+/* ==========================================
+   EDIT BUTTON
+========================================== */
+
+.edit-btn{
+    background:#2e7d32;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.edit-btn:hover{
+    background:#1b5e20;
+}
+
+
+/* ==========================================
+   DELETE BUTTON
+========================================== */
+
+.delete-btn{
+    background:#d32f2f;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.delete-btn:hover{
+    background:#b71c1c;
+}
+
+
+/* ==========================================
+   BACK BUTTON
+========================================== */
+
 .back-btn{
-    margin-top:20px;
     background:#1976d2;
     color:white;
     border:none;
     padding:10px 20px;
-    border-radius:5px;
+    border-radius:6px;
     cursor:pointer;
+    transition:.3s;
 }
 
 .back-btn:hover{
     background:#1565c0;
+}
+
+
+/* ==========================================
+   RESPONSIVE DESIGN
+========================================== */
+
+@media (max-width:600px){
+
+    .details-container{
+        width:90%;
+        padding:20px;
+    }
+
+    .upload-row{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .upload-btn{
+        width:100%;
+    }
+
+    .action-buttons{
+        flex-direction:column;
+    }
+
+    .edit-btn,
+    .delete-btn,
+    .back-btn{
+        width:100%;
+    }
 }
