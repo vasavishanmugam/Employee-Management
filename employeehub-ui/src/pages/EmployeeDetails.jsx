@@ -120,7 +120,7 @@ function EmployeeDetails () {
     return (
     <div className="details-container">
 
-        <h1 className="details-title">Employee Details</h1>
+        <h2 className="details-title">Employee Details</h2>
 
         <img
             src={
