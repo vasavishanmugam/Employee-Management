@@ -2,7 +2,20 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import "../App.css";
-import { Paper, TextField, Typography } from '@mui/material';
+import {   TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Avatar} from "@mui/material";
 
 function EmployeeList() {
 
@@ -157,128 +170,190 @@ async function deleteEmployee(id)
 }
 
   return(
-    <Paper elevation={3} sx={{p:4, m:4}}>
+    <div className="container">
       <div className='sort-container'>
-        <label>Sort By: </label>
-        <select
+        <FormControl sx={{minWidth: 220}}>
+          <InputLabel>
+          Sort By:
+          </InputLabel>
+        
+        <Select
           value={sort}
+          label="sort By"
           onChange={(e)=> {
             setSort(e.target.value);
             setPage(0);
           }}>
-            <option value="name,asc">Name (A-Z)</option>
-            <option value="name,desc">Name (Z-A)</option>
-            <option value="salary,asc">Salary (Low-High)</option>
-            <option value="salary,desc">Salary (High-Low)</option>
-            <option value="email,asc">Email (A-Z)</option>
-            <option value="email,desc">Email (Z-A)</option>
-          </select>
+            <MenuItem value="name,asc">Name (A-Z)</MenuItem>
+            <MenuItem value="name,desc">Name (Z-A)</MenuItem>
+            <MenuItem value="salary,asc">Salary (Low-High)</MenuItem>
+            <MenuItem value="salary,desc">Salary (High-Low)</MenuItem>
+            <MenuItem value="email,asc">Email (A-Z)</MenuItem>
+            <MenuItem value="email,desc">Email (Z-A)</MenuItem>
+          </Select>
+        </FormControl>
       </div>
-      <div className='form-container'>
-        <input
-        type='text'
-        placeholder='Enter Name'
-        value={name}
-        onChange={(e) => SetName(e.target.value)}
-        />
-        <input
-        type='email'
-        placeholder='Enter Email'
-        value={email}
-        onChange={(e) => SetEmail(e.target.value)}
-        />
-        <input
-        type='number'
-        placeholder='Enter Salary'
-        value={salary}
-        onChange={(e) => SetSalary(e.target.value)}
-        />
+      <Paper
+          elevation={3}
+          sx={{
+              p: 3,
+              mb: 3,
+              borderRadius: 3
+          }}
+      >
+          <h2 style={{ marginBottom: 20 }}>
+              {editingId ? "Update Employee" : "Add Employee"}
+          </h2>
 
-        <button variant="contained"
-    color="primary"
-     onClick={handleSubmit}>{ editingId ? "Update Employee" : "Add Employee"} </button>
-        {editingId && (
-    <button
-        variant="outlined"
-    color="secondary"
-        onClick={cancelEdit}
-    >
-        Cancel
-    </button>
-)}
-      </div>
+          <div
+              style={{
+                  display: "flex",
+                  gap: "15px",
+                  alignItems: "center"
+              }}
+          >
+              <TextField
+                  label="Employee Name"
+                  value={name}
+                  onChange={(e) => SetName(e.target.value)}
+                  sx={{ flex: 2 }}
+              />
+
+              <TextField
+                  label="Email"
+                  value={email}
+                  onChange={(e) => SetEmail(e.target.value)}
+                  sx={{ flex: 2 }}
+              />
+
+              <TextField
+                  label="Salary"
+                  type="number"
+                  value={salary}
+                  onChange={(e) => SetSalary(e.target.value)}
+                  sx={{ width: 180 }}
+              />
+
+              <Button
+                  variant="contained"
+                  size="large"
+                  onClick={handleSubmit}
+              >
+                  {editingId ? "Update" : "Add"}
+              </Button>
+
+              {editingId && (
+                  <Button
+                      variant="outlined"
+                      color="secondary"
+                      size="large"
+                      onClick={cancelEdit}
+                  >
+                      Cancel
+                  </Button>
+              )}
+          </div>
+      </Paper>
 
       <div className='search-container'>
         <TextField
-        label="Search Employee"
-        variant='outlined'
-        fullWidth
-        value={search}
-        sx={{mb:3}}
+          fullWidth
+          label='Search Employee'
+          variant='outlined'
+          value={search}
           onChange={(e) => setSearch(e.target.value)}
           />
       </div>
-    <Typography variant='h4' gutterBottom>Employee Management System</Typography>
+    <h1 className="title">Employee Management System</h1>
     {loading && (
       <p className='loading-text'>Loading Employees...</p>
     )}
 
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Photo</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Salary</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {employees.length > 0 ? (
-        employees.map((employee) => (
-          <tr key={employee.id}>
-            <td>{employee.id}</td>
-            <td>
-              {employee.profileImage ? (
-                <img
-                  src={`http://localhost:8080/uploads/profile/${employee.profileImage}`}
-                  alt={employee.name}
-                  className='profile-image'
-                  />
-              ) : (
-                <span>No Image</span>
-              )}
-            </td>
-            <td>{employee.name}</td>
-            <td>{employee.email}</td>
-            <td>₹ {employee.salary.toLocaleString("en-IN")}</td>
-            <td>
-              <button
-                className='view-btn'
-                onClick={() => navigate(`/employees/${employee.id}`)}
-                >
-                  View
-                </button>
-              <button 
-                className='edit-btn'
-                onClick={() => editEmployee(employee)}>
-                Edit
-              </button>
-              <button className='delete-btn'
-              onClick={() => deleteEmployee(employee.id)}
-              >Delete</button>
-            </td>
-          </tr>
+   <TableContainer component={Paper} sx={{ mt: 3 }}>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>ID</TableCell>
+          <TableCell>Photo</TableCell>
+          <TableCell>Name</TableCell>
+          <TableCell>Email</TableCell>
+          <TableCell align="right">Salary</TableCell>
+          <TableCell align="center">Action</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {
+        employees.length>0 ?
+        employees.map(employee=>(
+        <TableRow key={employee.id} hover>
+          <TableCell>
+            {employee.id}
+          </TableCell>
+          <TableCell>
+            {
+            employee.profileImage ?
+            <Avatar
+              src={`http://localhost:8080/uploads/profile/${employee.profileImage}`}
+              alt={employee.name}
+            />
+            :
+            <Avatar>
+              {employee.name.charAt(0)}
+            </Avatar>
+            }
+          </TableCell>
+          <TableCell>
+            {employee.name}
+          </TableCell>
+          <TableCell>
+            {employee.email}
+          </TableCell>
+          <TableCell align="right">
+            ₹ {employee.salary.toLocaleString("en-IN")}
+          </TableCell>
+          <TableCell align="center">
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={()=>navigate(`/employees/${employee.id}`)}
+            >
+              View
+            </Button>
+            <Button
+              size="small"
+              color="warning"
+              variant="contained"
+              sx={{mx:1}}
+              onClick={()=>editEmployee(employee)}
+            >
+              Edit
+            </Button>
+            <Button
+              size="small"
+              color="error"
+              variant="contained"
+              onClick={()=>deleteEmployee(employee.id)}
+            >
+              Delete
+            </Button>
+          </TableCell>
+        </TableRow>
         ))
-      ) : (
-        <tr>
-          <td colSpan="4" className='no-data'>No Employees found.</td>
-        </tr>
-      )}
-      </tbody>
-    </table>
+        :
+        (
+        <TableRow>
+          <TableCell
+          colSpan={6}
+          align="center"
+          >
+          No Employees Found
+          </TableCell>
+        </TableRow>
+        )
+        }
+      </TableBody>
+    </Table>
+  </TableContainer>
     <div className='pagination'>
       <button 
       onClick={()=> setPage(page - 1)}
@@ -290,7 +365,7 @@ async function deleteEmployee(id)
         disabled={page + 1 >= totalPages}
       >Next</button>
     </div>
-  </Paper>
+  </div>
   );
 }
 
