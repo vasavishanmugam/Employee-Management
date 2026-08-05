@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import "../App.css";
+import { Paper, TextField, Typography } from '@mui/material';
 
 function EmployeeList() {
 
@@ -156,7 +157,7 @@ async function deleteEmployee(id)
 }
 
   return(
-    <div className="container">
+    <Paper elevation={3} sx={{p:4, m:4}}>
       <div className='sort-container'>
         <label>Sort By: </label>
         <select
@@ -193,11 +194,13 @@ async function deleteEmployee(id)
         onChange={(e) => SetSalary(e.target.value)}
         />
 
-        <button onClick={handleSubmit}>{ editingId ? "Update Employee" : "Add Employee"} </button>
+        <button variant="contained"
+    color="primary"
+     onClick={handleSubmit}>{ editingId ? "Update Employee" : "Add Employee"} </button>
         {editingId && (
     <button
-        type="button"
-        className="cancel-btn"
+        variant="outlined"
+    color="secondary"
         onClick={cancelEdit}
     >
         Cancel
@@ -206,15 +209,16 @@ async function deleteEmployee(id)
       </div>
 
       <div className='search-container'>
-        <input
-          type='text'
-          placeholder='Search employee by name...'
-          value={search}
+        <TextField
+        label="Search Employee"
+        variant='outlined'
+        fullWidth
+        value={search}
+        sx={{mb:3}}
           onChange={(e) => setSearch(e.target.value)}
-          className='search-input'
           />
       </div>
-    <h1 className="title">Employee Management System</h1>
+    <Typography variant='h4' gutterBottom>Employee Management System</Typography>
     {loading && (
       <p className='loading-text'>Loading Employees...</p>
     )}
@@ -286,7 +290,7 @@ async function deleteEmployee(id)
         disabled={page + 1 >= totalPages}
       >Next</button>
     </div>
-  </div>
+  </Paper>
   );
 }
 
