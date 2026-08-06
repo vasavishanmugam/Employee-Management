@@ -1,0 +1,43 @@
+.topbar{
+    height:70px;
+    background:white;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 30px;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.topbar h2{
+    margin:0;
+    color:#1e293b;
+}
+
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.topbar-icon{
+    cursor:pointer;
+    color:#64748b;
+    transition:.3s;
+}
+
+.topbar-icon:hover{
+    color:#2563eb;
+}
+
+.topbar-profile{
+    font-size:40px !important;
+    color:#2563eb;
+    cursor:pointer;
+}
