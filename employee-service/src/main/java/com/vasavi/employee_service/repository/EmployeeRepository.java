@@ -33,4 +33,14 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 	int udpateEmployeeSalary(@Param("id") Long id, @Param("salary") Double salary);
 	
 	List<EmployeeNameEmailProjection> findBy();
+	
+	@Query("SELECT MAX(e.salary) FROM Employee e")
+	Double getHightestSalary();
+	
+	@Query("SELECT MIN(e.salary) FROM Employee e")
+	Double getLowestSalary();
+	
+	@Query("SELECT AVG(e.salary) FROM Employee e")
+	Double getAverageSalary();
+	
 }
