@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import "../App.css";
+import SalaryChart from "../components/SalaryChart";
 import {   TextField,
   Button,
   FormControl,
@@ -204,6 +205,140 @@ async function deleteEmployee(id)
 
   return(
     <div className="container">
+      <h1 className="title">Employee Management System</h1>
+      {loading && (
+        <p className='loading-text'>Loading Employees...</p>
+      )}
+      <Grid container spacing={3} sx={{ mb:4}}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Card elevation={3}>
+            <CardContent>
+              <Box
+                      sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+                >
+                  <div>
+                    <Typography variant='subtitle2' color='text.secondary'>
+                      Total Employees
+                    </Typography>
+
+                    <Typography variant='h4'  sx={{
+                        color: "#1976d2",
+                        fontWeight: "bold"
+                    }}>
+                      {dashboard.totalEmployees}
+                    </Typography>
+                  </div>
+
+                  <GroupsIcon
+                  sx={{
+                    fontSize: 45,
+                    color: "#1976d2"
+                  }} />
+                </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Card elevation={3}>
+            <CardContent>
+              <Box   sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}>
+                <div>
+                  <Typography variant='subtitle2' color='text.secondary'>
+                    Highest Salary
+                  </Typography>
+
+                  <Typography variant='h4'sx={{ 
+                                            color: "#2e7d32",
+                                            fontWeight: "bold"}}>
+                    ₹{dashboard.highestSalary?.toLocaleString("en-IN")}
+                  </Typography>
+                </div>
+                <TrendingUpIcon
+                sx={{
+                  fontSize:45,
+                  color: "#2e7d32"
+                }} />
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+            
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Card elevation={3}>
+            <CardContent>
+              <Box  sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}>
+                <div>
+                  <Typography variant='subtitle2' color='text.secondary'>
+                    Lowest Salary
+                  </Typography>
+
+                  <Typography variant='h4' sx={{
+                      color: "#d32f2f",
+                      fontWeight: "bold"
+                  }}>
+                    ₹{dashboard.lowestSalary?.toLocaleString("en-IN")}
+                  </Typography>
+                </div>
+
+                <TrendingDownIcon
+                sx={{
+                  fontSize: 45,
+                  color: "#d32f2f"
+                }} />
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+        
+        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+          <Card elevation={3}>
+            <CardContent>
+              <Box   sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}>
+                <div>
+                  <Typography variant='subtitle2' color='text.secondary'>
+                    Average Salary
+                  </Typography>
+
+                  <Typography variant='h4' sx={{
+                        color: "#7b1fa2",
+                        fontWeight: "bold"
+                    }}>
+                    ₹{Math.round(dashboard.averageSalary)?.toLocaleString("en-IN")}
+                  </Typography>
+                </div>
+                <AccountBalanceWalletIcon
+                  sx={{
+                    fontSize: 45,
+                    color: "#7b1fa2"
+                  }} />
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      <SalaryChart
+        employees={employees}
+        loading={loading}
+    />
+
       <div className='sort-container'>
         <FormControl sx={{minWidth: 220}}>
           <InputLabel>
@@ -408,11 +543,7 @@ async function deleteEmployee(id)
           onChange={(e) => setSearch(e.target.value)}
           />
       </div>
-    <h1 className="title">Employee Management System</h1>
-    {loading && (
-      <p className='loading-text'>Loading Employees...</p>
-    )}
-
+    <h3 className="title">Employee Table</h3>
    <TableContainer component={Paper} sx={{ mt: 3 }}>
     <Table>
       <TableHead>
