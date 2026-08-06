@@ -14,6 +14,7 @@ import com.vasavi.employee_service.exception.EmployeeNotFoundException;
 import com.vasavi.employee_service.projection.EmployeeNameEmailProjection;
 import com.vasavi.employee_service.repository.EmployeeRepository;
 import com.vasavi.employee_service.specification.EmployeeSpecification;
+import com.vasavi.employee_service.dto.DashboardStatsDto;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -216,5 +217,17 @@ public class EmployeeService {
 		
 		employee.setResumeFile(fileName);
 		repository.save(employee);
+	}
+	
+	public DashboardStatsDto getDashboardStatistics()
+	{
+		DashboardStatsDto dashboard = new DashboardStatsDto();
+		
+		dashboard.setTotalEmployees(repository.count());
+		dashboard.setAverageSalary(repository.getAverageSalary());
+		dashboard.setHighestSalary(repository.getHightestSalary());
+		dashboard.setLowestSalary(repository.getLowestSalary());
+		
+		return dashboard;
 	}
 }

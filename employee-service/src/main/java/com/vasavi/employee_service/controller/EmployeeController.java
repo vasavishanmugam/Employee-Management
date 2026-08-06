@@ -23,6 +23,7 @@ import com.vasavi.employee_service.service.EmployeeService;
 import com.vasavi.employee_service.service.FileStorageService;
 import com.vasavi.employee_service.transaction.TransactionDemoService;
 import com.vasavi.employee_service.util.ResponseUtil;
+import com.vasavi.employee_service.dto.DashboardStatsDto;
 
 import org.springframework.http.MediaType;
 import org.springframework.core.io.Resource;
@@ -329,5 +330,18 @@ public class EmployeeController {
 				.header(HttpHeaders.CONTENT_DISPOSITION,
 						"attachment; filename=\"" + employee.getResumeFile() + "\"")
 				.body(resource);
+	}
+	
+	@Operation(
+		    summary = "Get Dashboard Statistics",
+		    description = "Returns employee dashboard statistics"
+		)
+	@GetMapping("/dashboard")
+	public ResponseEntity<ApiResponse<DashboardStatsDto>> getDashboardStatistics() {
+		DashboardStatsDto dashboard = service.getDashboardStatistics();
+		
+		return ResponseUtil.success(
+				"Dashboard statistics fetched successfully", 
+				dashboard);
 	}
 }
