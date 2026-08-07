@@ -8,6 +8,7 @@ import Employees from "./pages/Employees";
 import AddEmployee from "./pages/AddEmployee";
 import UploadFiles from "./pages/UploadFiles";
 import Settings from "./pages/Settings";
+import UploadEmployees from "./pages/UploadEmployees";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
         <Route path="/employees" element={<EmployeeList />} /> */}
                 <Route path="/employees" element={<Employees />} />
                 <Route path="/add" element={<AddEmployee />} />
-                <Route path="/upload" element={<UploadFiles />} />
+                <Route path="/upload" element={<UploadEmployees />} />
                 <Route path="/settings" element={<Settings />} />
 
       </Routes>

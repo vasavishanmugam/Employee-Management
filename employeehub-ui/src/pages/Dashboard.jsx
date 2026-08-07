@@ -1,7 +1,13 @@
+import DashboardHeader from "../components/dashboard/DashboardHeader";
 import EmployeeList from "./EmployeeList";
 
 function Dashboard() {
-    return <EmployeeList />;
+    return (
+        <>
+            <DashboardHeader />
+            <EmployeeList />
+        </>
+    )
 }
 
 export default Dashboard;
