@@ -1,5 +1,13 @@
+import PageHeader from "../components/common/PageHeader";
+
 function AddEmployee() {
-    return <h1>Add Employee Page</h1>;
+    return (
+        <>
+            <PageHeader title="Add Employee"
+            subtitle="Create a new employee record."
+            />
+        </>
+    )
 }
 
 export default AddEmployee;

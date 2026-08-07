@@ -32,6 +32,7 @@ import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 import DashboardStats from "../components/dashboard/DashboardStats";
+import RecentEmployees from '../components/dashboard/RecentEmployees';
 
 function EmployeeList() {
 
@@ -312,91 +313,8 @@ async function deleteEmployee(id)
           />
       </div>
     <h3 className="title">Employee Table</h3>
-   <TableContainer component={Paper} sx={{ mt: 3 }}>
-    <Table>
-      <TableHead>
-        <TableRow>
-          <TableCell>ID</TableCell>
-          <TableCell>Photo</TableCell>
-          <TableCell>Name</TableCell>
-          <TableCell>Email</TableCell>
-          <TableCell align="right">Salary</TableCell>
-          <TableCell align="center">Action</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {
-        employees.length>0 ?
-        employees.map(employee=>(
-        <TableRow key={employee.id} hover>
-          <TableCell>
-            {employee.id}
-          </TableCell>
-          <TableCell>
-            {
-            employee.profileImage ?
-            <Avatar
-              src={`http://localhost:8080/uploads/profile/${employee.profileImage}`}
-              alt={employee.name}
-            />
-            :
-            <Avatar>
-              {employee.name.charAt(0)}
-            </Avatar>
-            }
-          </TableCell>
-          <TableCell>
-            {employee.name}
-          </TableCell>
-          <TableCell>
-            {employee.email}
-          </TableCell>
-          <TableCell align="right">
-            ₹ {employee.salary.toLocaleString("en-IN")}
-          </TableCell>
-          <TableCell align="center">
-            <Button
-              size="small"
-              variant="outlined"
-              onClick={()=>navigate(`/employees/${employee.id}`)}
-            >
-              View
-            </Button>
-            <Button
-              size="small"
-              color="warning"
-              variant="contained"
-              sx={{mx:1}}
-              onClick={()=>editEmployee(employee)}
-            >
-              Edit
-            </Button>
-            <Button
-              size="small"
-              color="error"
-              variant="contained"
-              onClick={()=>deleteEmployee(employee.id)}
-            >
-              Delete
-            </Button>
-          </TableCell>
-        </TableRow>
-        ))
-        :
-        (
-        <TableRow>
-          <TableCell
-          colSpan={6}
-          align="center"
-          >
-          No Employees Found
-          </TableCell>
-        </TableRow>
-        )
-        }
-      </TableBody>
-    </Table>
-  </TableContainer>
+
+  <RecentEmployees employees={employees.slice(0,5)}/>
     <div className='pagination'>
       <button 
       onClick={()=> setPage(page - 1)}

@@ -1,5 +1,14 @@
+import PageHeader from "../components/common/PageHeader";
+
 function Settings() {
-    return <h1>Settings Page</h1>;
+    return (
+        <>
+            <PageHeader
+                title="Settings"
+                subtitle="Manage application settings."
+            />
+        </>
+    );
 }
 
 export default Settings;
