@@ -69,12 +69,13 @@ public class EmployeeController {
 	@Operation(
 			summary = "Create Employee",
 			description = "Create a new employee in the system")
-	@PostMapping
-	public ResponseEntity<ApiResponse<EmployeeDto>> createEmployee(@Valid @RequestBody EmployeeDto dto)
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<ApiResponse<EmployeeDto>> createEmployee(@Valid @RequestPart("employee") EmployeeDto dto,
+			@RequestPart(value = "profileImage", required = false)
+			MultipartFile profileImage) 
 	{
-		Employee employee = modelMapper.map(dto, Employee.class);
 		
-		Employee savedEmployee  = service.saveEmployee(employee);
+		Employee savedEmployee  = service.saveEmployee(dto, profileImage);
 		
 		EmployeeDto responseDto =
 		        modelMapper.map(savedEmployee, EmployeeDto.class);
@@ -104,12 +105,20 @@ public class EmployeeController {
 	@Operation(
 			summary = "Update Employee",
 			description = "Updates employee details")
-	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponse<EmployeeDto>> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDto dto)
+	@PutMapping(
+		    value = "/{id}",
+		    consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+		)
+	public ResponseEntity<ApiResponse<EmployeeDto>> updateEmployee(@PathVariable Long id,
+			 @RequestPart("employee")
+    EmployeeDto dto,
+
+    @RequestPart(value = "profileImage", required = false)
+    MultipartFile profileImage) throws IOException 
 	{
 		Employee employee = modelMapper.map(dto, Employee.class);
 		
-		Employee updatedEmployee = service.updateEmployee(id, employee);
+		Employee updatedEmployee = service.updateEmployee(id, employee, profileImage);
 		
 		EmployeeDto responseDto = modelMapper.map(updatedEmployee, EmployeeDto.class);
 
@@ -282,7 +291,8 @@ public class EmployeeController {
 		EmployeeDto dto = modelMapper.map(employee, EmployeeDto.class);
 		return ResponseUtil.success(
 	            "Profile image uploaded successfully",
-	            dto);	}
+	            dto);
+		}
 	
 	@Operation(
 		    summary = "Upload Resume",
@@ -291,7 +301,6 @@ public class EmployeeController {
 	@PostMapping("/{id}/resume")
 	public ResponseEntity<ApiResponse<EmployeeDto>> uploadResume(@PathVariable Long id,
 			@RequestParam("file") MultipartFile file)
-	throws IOException
 	{
 		String fileName = fileStorageService.saveResume(file);
 		service.updateResumeFile(id, fileName);

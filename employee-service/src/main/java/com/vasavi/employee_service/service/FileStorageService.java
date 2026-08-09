@@ -30,18 +30,36 @@ public class FileStorageService {
 		return fileName;
 	}
 		
-	public String saveFile(MultipartFile file) throws IOException
+	public String saveFile(MultipartFile file) 
 	{
-		return save(file, "profile");
+		try {
+	        return save(file, "profile");
+	    } catch (IOException e) {
+	        throw new RuntimeException("Failed to save profile image", e);
+	    }
+
 	}
 	
-	public String saveResume(MultipartFile file) throws IOException
+	public String saveResume(MultipartFile file) 
 	{
-		if (!file.getOriginalFilename().toLowerCase().endsWith(".pdf"))
+		if (file  == null || file.isEmpty())
+		{
+			throw new IllegalArgumentException("Resume file is empty.");
+		}
+		
+	    String originalFileName = file.getOriginalFilename();
+
+		
+		if (originalFileName == null || !originalFileName.toLowerCase().endsWith(".pdf"))
 		{
 			throw new IllegalArgumentException("Only PDF files are allowed");
 		}
 		
-		return save(file, "resume");
+		try {
+	        return save(file, "resume");
+	    } catch (IOException e) {
+	    	e.printStackTrace();
+	        throw new RuntimeException("Failed to save resume", e);
+	    }
 	}
 }

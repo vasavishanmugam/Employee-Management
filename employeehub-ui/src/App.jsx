@@ -9,6 +9,7 @@ import AddEmployee from "./pages/AddEmployee";
 import UploadFiles from "./pages/UploadFiles";
 import Settings from "./pages/Settings";
 import UploadEmployees from "./pages/UploadEmployees";
+import EditEmployee from "./pages/EditEmployee";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
                 <Route path="/add" element={<AddEmployee />} />
                 <Route path="/upload" element={<UploadEmployees />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route path="/employees/:id" element={<EmployeeDetails />} />
+                <Route   path="/employees/:id/edit"  element={<EditEmployee />} />
 
       </Routes>
     </DashboardLayout>
