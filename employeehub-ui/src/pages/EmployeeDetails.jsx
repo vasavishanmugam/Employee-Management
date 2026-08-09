@@ -79,11 +79,11 @@ function EmployeeDetails () {
             await api.post(
                 `/employees/${id}/resume`,
                 formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                }
+                // {
+                //     headers: {
+                //         "Content-Type": "multipart/form-data"
+                //     }
+                // }
             );
 
             alert("Resume uploaded successfully.");
@@ -217,7 +217,7 @@ function EmployeeDetails () {
 
             <button
                 className="edit-btn"
-                onClick={() => navigate(`/?edit=${employee.id}`)}
+                onClick={() => navigate(`/employees/${employee.id}/edit`)}
             >
                 Edit Employee
             </button>

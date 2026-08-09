@@ -5,7 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.vasavi.employee_service.dto.EmployeeDto;
@@ -28,15 +30,32 @@ public class EmployeeService {
 	private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private FileStorageService fileStorageDevice;
 
 	public EmployeeService(EmployeeRepository repository) {
 		this.repository = repository;
 	}
 
-	public Employee saveEmployee(Employee employee)
+	public Employee saveEmployee( EmployeeDto employeeDto,
+	        MultipartFile profileImage)
 	{
+		Employee employee = new Employee();
+
+	    employee.setName(employeeDto.getName());
+	    employee.setEmail(employeeDto.getEmail());
+	    employee.setSalary(employeeDto.getSalary());
+		
 	    logger.info("Creating employee {}", employee.getName());
 
+	    if (profileImage != null  && !profileImage.isEmpty())
+	    {
+	    	  String fileName =
+	    			  fileStorageDevice.saveFile(profileImage);
+	    	employee.setProfileImage(fileName);
+	    }	
+	    
 	    Employee savedEmployee = repository.save(employee);
 
 	    logger.info("Employee created successfully with id {}", savedEmployee.getId());
@@ -66,7 +85,10 @@ public class EmployeeService {
 	            });
 	}
 	
-	public Employee updateEmployee(Long id, Employee employee)
+	public Employee updateEmployee(
+	        Long id,
+	        Employee employee,
+	        MultipartFile profileImage) throws IOException 
 	{
 	    logger.info("Updating employee with id {}", id);
 
@@ -80,6 +102,17 @@ public class EmployeeService {
 	    existingEmployee.setEmail(employee.getEmail());
 	    existingEmployee.setSalary(employee.getSalary());
 
+	 // Update profile image only if a new image was selected
+
+	    if (profileImage != null && !profileImage.isEmpty()) {
+
+	        String fileName =
+	                fileStorageDevice.saveFile(profileImage);
+
+	        existingEmployee.setProfileImage(fileName);
+	    }
+
+	    
 	    Employee updatedEmployee = repository.save(existingEmployee);
 
 	    logger.info("Employee updated successfully with id {}", id);
