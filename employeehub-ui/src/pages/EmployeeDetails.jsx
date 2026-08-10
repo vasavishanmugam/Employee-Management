@@ -79,11 +79,6 @@ function EmployeeDetails () {
             await api.post(
                 `/employees/${id}/resume`,
                 formData,
-                // {
-                //     headers: {
-                //         "Content-Type": "multipart/form-data"
-                //     }
-                // }
             );
 
             alert("Resume uploaded successfully.");
