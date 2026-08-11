@@ -15,15 +15,44 @@ function App() {
   return (
     <DashboardLayout>
       <Routes>
-        <Route path="/" element={<Dashboard />}  />
-        {/* <Route path="/employees/:id" element={<EmployeeDetails/>} />
-        <Route path="/employees" element={<EmployeeList />} /> */}
-                <Route path="/employees" element={<Employees />} />
-                <Route path="/add" element={<AddEmployee />} />
-                <Route path="/upload" element={<UploadEmployees />} />
-                <Route path="/settings" element={<Settings />} />
-                <Route path="/employees/:id" element={<EmployeeDetails />} />
-                <Route   path="/employees/:id/edit"  element={<EditEmployee />} />
+         <Route
+                    path="/"
+                    element={<Dashboard />}
+                />
+
+                <Route
+                    path="/employees"
+                    element={<Employees />}
+                />
+
+                <Route
+                    path="/add"
+                    element={<AddEmployee />}
+                />
+
+                  <Route
+                    path="/upload"
+                    element={<UploadEmployees />}
+                />
+
+                   <Route
+                    path="/settings"
+                    element={<Settings />}
+                />
+
+                <Route
+                 path="/employees/:id"
+                 element={<EmployeeDetails />}
+                  />
+                <Route
+                 path="/employees/:id/edit"
+                 element={<EditEmployee />}
+                  />
+
+                {/* <Route path="/upload" element={<UploadEmployees />} />
+                <Route path="/settings" element={<Settings />} /> */}
+                {/* <Route path="/employees/:id" element={<EmployeeDetails />} />
+                <Route   path="/employees/:id/edit"  element={<EditEmployee />} /> */}
 
       </Routes>
     </DashboardLayout>

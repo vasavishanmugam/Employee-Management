@@ -2,13 +2,21 @@
    EMPLOYEE DETAILS PAGE CONTAINER
 ========================================== */
 
-.details-container{
-    width:500px;
-    margin:40px auto;
-    padding:30px;
-    background:#ffffff;
-    border-radius:12px;
-    box-shadow:0 4px 15px rgba(0,0,0,.15);
+.details-container {
+    width: 500px;
+    max-width: calc(100% - 40px);
+
+    margin: 40px auto;
+    padding: 30px;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.10);
+
+    box-sizing: border-box;
 }
 
 
@@ -16,10 +24,15 @@
    PAGE TITLE
 ========================================== */
 
-.details-title{
-    text-align:center;
-    margin-bottom:20px;
-    color:#333;
+.details-title {
+    text-align: center;
+
+    margin: 0 0 25px;
+
+    color: #1e293b;
+
+    font-size: 24px;
+    font-weight: 700;
 }
 
 
@@ -27,14 +40,21 @@
    PROFILE IMAGE
 ========================================== */
 
-.details-image{
-    display:block;
-    width:150px;
-    height:150px;
-    margin:0 auto 20px;
-    border-radius:50%;
-    object-fit:cover;
-    border:3px solid #1976d2;
+.details-image {
+    display: block;
+
+    width: 150px;
+    height: 150px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 4px solid #2563eb;
+
+    background: #f1f5f9;
 }
 
 
@@ -42,10 +62,15 @@
    EMPLOYEE NAME
 ========================================== */
 
-.details-container h2{
-    text-align:center;
-    margin-bottom:25px;
-    color:#222;
+.details-container > h2:not(.details-title) {
+    text-align: center;
+
+    margin: 0 0 25px;
+
+    color: #0f172a;
+
+    font-size: 22px;
+    font-weight: 700;
 }
 
 
@@ -53,28 +78,66 @@
    EMPLOYEE INFORMATION
 ========================================== */
 
-.employee-info{
-    margin-bottom:20px;
+.employee-info {
+    margin-bottom: 20px;
+
+    padding: 5px 0;
 }
 
-.employee-info p{
-    margin:12px 0;
-    font-size:18px;
-    color:#444;
+
+.employee-info p {
+    display: flex;
+
+    align-items: center;
+
+    margin: 14px 0;
+
+    font-size: 15px;
+
+    color: #475569;
+
+    line-height: 1.5;
 }
 
-.employee-info strong{
-    color:#222;
+
+.employee-info strong {
+    min-width: 90px;
+
+    color: #1e293b;
+
+    font-weight: 600;
 }
 
-.employee-info a{
-    color:#1976d2;
-    text-decoration:none;
-    font-weight:bold;
+
+.employee-info a {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 6px 12px;
+
+    border-radius: 6px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
 }
 
-.employee-info a:hover{
-    text-decoration:underline;
+
+.employee-info a:hover {
+    background: #dbeafe;
+
+    color: #1d4ed8;
 }
 
 
@@ -82,10 +145,14 @@
    SECTION HEADING
 ========================================== */
 
-.section-title{
-    text-align:center;
-    color:#555;
-    margin:20px 0;
+.section-title {
+    margin: 20px 0;
+
+    color: #334155;
+
+    font-size: 18px;
+
+    font-weight: 700;
 }
 
 
@@ -93,10 +160,12 @@
    DIVIDER
 ========================================== */
 
-hr{
-    margin:25px 0;
-    border:none;
-    border-top:1px solid #dddddd;
+.details-container hr {
+    margin: 25px 0;
+
+    border: none;
+
+    border-top: 1px solid #e2e8f0;
 }
 
 
@@ -104,15 +173,29 @@ hr{
    FILE UPLOAD SECTION
 ========================================== */
 
-.upload-group{
-    margin-bottom:20px;
+.upload-group {
+    margin-bottom: 22px;
+
+    padding: 15px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 10px;
 }
 
-.upload-group label{
-    display:block;
-    margin-bottom:8px;
-    font-weight:bold;
-    color:#333;
+
+.upload-group label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #334155;
+
+    font-size: 14px;
+
+    font-weight: 600;
 }
 
 
@@ -120,15 +203,57 @@ hr{
    FILE INPUT + BUTTON ROW
 ========================================== */
 
-.upload-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
+.upload-row {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
 }
 
-.upload-row input{
-    flex:1;
+
+.upload-row input {
+    flex: 1;
+
+    min-width: 0;
+
+    font-size: 13px;
+
+    color: #475569;
+}
+
+
+/* ==========================================
+   FILE INPUT
+========================================== */
+
+.upload-row input::file-selector-button {
+    margin-right: 10px;
+
+    padding: 8px 12px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.upload-row input::file-selector-button:hover {
+    background: #f1f5f9;
+
+    border-color: #94a3b8;
 }
 
 
@@ -136,19 +261,45 @@ hr{
    COMMON UPLOAD BUTTON
 ========================================== */
 
-.upload-btn{
-    width:120px;
-    padding:10px;
-    border:none;
-    border-radius:6px;
-    background:#1976d2;
-    color:white;
-    cursor:pointer;
-    transition:.3s;
+.upload-btn {
+    flex-shrink: 0;
+
+    height: 38px;
+
+    min-width: 90px;
+
+    padding: 0 18px;
+
+    border: 1px solid #2563eb;
+
+    border-radius: 7px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
 }
 
-.upload-btn:hover{
-    background:#1565c0;
+
+.upload-btn:hover {
+    background: #1d4ed8;
+
+    border-color: #1d4ed8;
+}
+
+
+.upload-btn:active {
+    transform: scale(0.97);
 }
 
 
@@ -156,50 +307,46 @@ hr{
    ACTION BUTTONS CONTAINER
 ========================================== */
 
-.action-buttons{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:15px;
-    margin-top:25px;
+.action-buttons {
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 25px;
 }
 
 
 /* ==========================================
-   EDIT BUTTON
+   COMMON ACTION BUTTON
 ========================================== */
 
-.edit-btn{
-    background:#2e7d32;
-    color:white;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    cursor:pointer;
-    transition:.3s;
+.action-buttons button {
+    height: 42px;
+
+    padding: 0 18px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.1s ease;
 }
 
-.edit-btn:hover{
-    background:#1b5e20;
-}
 
-
-/* ==========================================
-   DELETE BUTTON
-========================================== */
-
-.delete-btn{
-    background:#d32f2f;
-    color:white;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    cursor:pointer;
-    transition:.3s;
-}
-
-.delete-btn:hover{
-    background:#b71c1c;
+.action-buttons button:active {
+    transform: scale(0.97);
 }
 
 
@@ -207,18 +354,81 @@ hr{
    BACK BUTTON
 ========================================== */
 
-.back-btn{
-    background:#1976d2;
-    color:white;
-    border:none;
-    padding:10px 20px;
-    border-radius:6px;
-    cursor:pointer;
-    transition:.3s;
+.back-btn {
+    background: #ffffff;
+
+    color: #475569;
+
+    border: 1px solid #cbd5e1;
 }
 
-.back-btn:hover{
-    background:#1565c0;
+
+.back-btn:hover {
+    background: #f8fafc;
+
+    border-color: #94a3b8;
+
+    color: #334155;
+}
+
+
+/* ==========================================
+   EDIT BUTTON - GREEN
+========================================== */
+
+.edit-btn {
+    background: #16a34a;
+
+    color: #ffffff;
+
+    border: 1px solid #16a34a;
+}
+
+
+.edit-btn:hover {
+    background: #15803d;
+
+    border-color: #15803d;
+
+    color: #ffffff;
+}
+
+
+
+/* ==========================================
+   DELETE BUTTON
+========================================== */
+
+.delete-btn {
+    background: #ffffff;
+
+    color: #dc2626;
+
+    border: 1px solid #fca5a5;
+}
+
+
+.delete-btn:hover {
+    background: #fef2f2;
+
+    border-color: #dc2626;
+
+    color: #b91c1c;
+}
+
+
+/* ==========================================
+   LOADING / NOT FOUND / ERROR
+========================================== */
+
+.details-container > p {
+    color: #64748b;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+
+    margin-bottom: 20px;
 }
 
 
@@ -226,29 +436,196 @@ hr{
    RESPONSIVE DESIGN
 ========================================== */
 
-@media (max-width:600px){
+@media (max-width: 600px) {
 
-    .details-container{
-        width:90%;
-        padding:20px;
+    .details-container {
+        width: 90%;
+
+        max-width: 90%;
+
+        margin: 25px auto;
+
+        padding: 20px;
     }
 
-    .upload-row{
-        flex-direction:column;
-        align-items:stretch;
+
+    .details-title {
+        font-size: 21px;
     }
 
-    .upload-btn{
-        width:100%;
+
+    .details-image {
+        width: 120px;
+
+        height: 120px;
     }
 
-    .action-buttons{
-        flex-direction:column;
+
+    .employee-info p {
+        display: block;
+
+        margin: 15px 0;
     }
 
-    .edit-btn,
-    .delete-btn,
-    .back-btn{
-        width:100%;
+
+    .employee-info strong {
+        display: block;
+
+        margin-bottom: 4px;
     }
+
+
+    .upload-row {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .upload-row input {
+        width: 100%;
+    }
+
+
+    .upload-btn {
+        width: 100%;
+    }
+
+
+    .action-buttons {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .action-buttons button {
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================================
+   VERY SMALL SCREENS
+========================================== */
+
+@media (max-width: 400px) {
+
+    .details-container {
+        width: 94%;
+
+        max-width: 94%;
+
+        padding: 16px;
+    }
+
+
+    .details-image {
+        width: 105px;
+
+        height: 105px;
+    }
+
+
+    .details-container > h2:not(.details-title) {
+        font-size: 20px;
+    }
+
+}
+
+/* ==========================================
+   NOT FOUND / ERROR BACK BUTTON
+========================================== */
+
+.details-container > .back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 42px;
+    min-width: 170px;
+
+    padding: 0 20px;
+
+    background: #ffffff;
+    color: #475569;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.1s ease;
+}
+
+.details-container > .back-btn:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: #1e293b;
+}
+
+.details-container > .back-btn:active {
+    transform: scale(0.97);
+}
+
+/* ==========================================
+   DELETE BUTTON
+========================================== */
+
+.delete-btn {
+    min-width: 150px;
+
+    height: 42px;
+
+    padding: 0 20px;
+
+    background: #ffffff;
+
+    color: #dc2626;
+
+    border: 1px solid #dc2626;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+
+    color: #ffffff;
+
+    border-color: #dc2626;
+}
+
+.delete-btn:active {
+    transform: scale(0.97);
+}
+
+.delete-btn:disabled {
+    background: #fef2f2;
+
+    color: #fca5a5;
+
+    border-color: #fca5a5;
+
+    cursor: not-allowed;
 }
