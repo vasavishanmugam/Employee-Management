@@ -1,244 +1,109 @@
-/* =========================
-   SIDEBAR
-========================= */
-
 .sidebar {
     position: fixed;
-
     left: 0;
     top: 0;
-    bottom: 0;
-
-    width: 260px;
+    width:260px;
+    transition:width .3s ease;
+    overflow:hidden;
     height: 100vh;
-
     background: #0f172a;
     color: white;
-
-    box-sizing: border-box;
-
-    padding: 25px 18px;
-
-    overflow: hidden;
-
-    transition: width 0.3s ease;
-
-    z-index: 1000;
+    padding: 25px;
 }
 
-
-/* =========================
-   COLLAPSED
-========================= */
-
-.sidebar.collapsed {
-    width: 80px;
+.sidebar.collapsed{
+    width:80px;
 }
 
-
-/* =========================
-   HEADER
-========================= */
-
-.sidebar-header {
-    display: flex;
-
-    align-items: center;
-
-    gap: 16px;
-
-    width: 100%;
-
-    box-sizing: border-box;
-}
-
-
-/* =========================
-   MENU BUTTON
-========================= */
-
-.collapse-btn {
-    color: white;
-
-    cursor: pointer;
-
-    font-size: 30px !important;
-
-    flex-shrink: 0;
-
-    transition: color 0.2s ease;
-}
-
-.collapse-btn:hover {
-    color: #60a5fa;
-}
-
-
-/* =========================
-   LOGO
-========================= */
-
-.logo {
-    display: flex;
-
-    align-items: center;
-
-    min-width: 0;
-}
-
-.logo h2 {
-    margin: 0;
-
-    color: white;
-
-    font-size: 18px;
-
-    font-weight: 700;
-
-    line-height: 1.3;
-
-    white-space: nowrap;
-}
-
-
-/* =========================
-   DIVIDER
-========================= */
-
-.sidebar-divider {
-    width: 90%;
-
-    height: 1px;
-
-    background: #2b3550;
-
-    margin: 25px auto;
-}
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-.sidebar nav {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-    width: 100%;
-}
-
-
-/* =========================
-   MENU ITEM
-========================= */
-
-.menu-item {
-    display: flex;
-
-    align-items: center;
-
-    gap: 14px;
-
-    width: 100%;
-
-    min-width: 0;
-
-    padding: 13px 16px;
-
-    box-sizing: border-box;
-
-    color: #cbd5e1;
-
-    text-decoration: none;
-
-    border-radius: 10px;
-
-    font-size: 15px;
-
-    font-weight: 500;
-
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease;
-}
-
-
-/* ICON */
-
-.menu-item svg {
-    font-size: 23px;
-
-    flex-shrink: 0;
-}
-
-
-/* TEXT */
-
-.menu-item span {
-    white-space: nowrap;
-}
-
-
-/* =========================
-   HOVER
-========================= */
-
-.menu-item:hover {
-    background-color: #1e40af;
-
-    color: white;
-}
-
-
-/* =========================
-   ACTIVE
-========================= */
-
-.menu-item.active {
-    background-color: #2563eb;
-
-    color: white;
-
-    font-weight: 600;
-
-    box-shadow:
-        0 2px 8px rgba(37, 99, 235, 0.25);
-}
-
-
-/* =========================
-   COLLAPSED MENU
-========================= */
-
-.sidebar.collapsed .sidebar-header {
+.sidebar.collapsed .menu-item{
     justify-content: center;
+    padding: 16px 0;
 }
 
-.sidebar.collapsed .collapse-btn {
-    margin: 0 auto;
-}
-
-.sidebar.collapsed .menu-item {
-    justify-content: center;
-
-    padding: 14px 0;
-
-    gap: 0;
-}
-
-.sidebar.collapsed .menu-item span {
+.sidebar.collapsed .menu-item span{
     display: none;
 }
 
-.sidebar.collapsed .menu-item svg {
-    margin: 0;
-
-    font-size: 27px;
+.sidebar.collapsed .logo{
+    display: none;
 }
 
-.sidebar.collapsed .sidebar-divider {
-    width: 50%;
+.sidebar.collapsed .sidebar-header{
+    justify-content: center;
+}
+
+.sidebar.collapsed .menu-item svg{
+    margin: 0;
+    font-size: 28px;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.menu-item:hover {
+    background: #2563eb;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Hover */
+.menu-item:hover {
+    background-color: #1e40af;
+}
+
+/* Active page */
+.menu-item.active {
+    background-color: #2563eb;
+    font-weight: 600;
+}
+
+.menu-item.active svg,
+.menu-item.active span {
+    color: white;
+}
+
+.sidebar-header{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.logo h2{
+    margin:0;
+    color:white;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.collapse-btn{
+    color:white;
+    cursor:pointer;
+    font-size: 32px !important;
+    flex-shrink: 0;
+}
+
+.collapse-btn:hover{
+    color:#60a5fa;
+}
+
+.sidebar-divider{
+    width:80%;
+    height:1px;
+    background:#2b3550;
+    margin:20px auto;
 }
