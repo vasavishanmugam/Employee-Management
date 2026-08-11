@@ -1,0 +1,343 @@
+/* ==========================================
+   EDIT EMPLOYEE PAGE
+========================================== */
+
+.edit-employee-page {
+    width: 100%;
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    padding: 10px 0 40px;
+}
+
+
+/* ==========================================
+   CARD
+========================================== */
+
+.edit-employee-card {
+    width: 100%;
+
+    border-radius: 14px !important;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+
+/* ==========================================
+   PROFILE SECTION
+========================================== */
+
+.edit-profile-section {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 10px 0 25px;
+
+    border-bottom: 1px solid #e2e8f0;
+
+    margin-bottom: 25px;
+}
+
+
+/* ==========================================
+   PROFILE AVATAR
+========================================== */
+
+.edit-profile-avatar {
+    width: 120px !important;
+
+    height: 120px !important;
+
+    margin-bottom: 12px;
+
+    border: 4px solid #2563eb;
+
+    background: #f1f5f9;
+}
+
+
+/* ==========================================
+   PROFILE NAME
+========================================== */
+
+.edit-profile-name {
+    color: #1e293b;
+
+    font-weight: 700 !important;
+
+    margin-bottom: 12px !important;
+}
+
+
+/* ==========================================
+   CHOOSE IMAGE BUTTON
+========================================== */
+
+.choose-image-btn {
+    height: 40px !important;
+
+    padding: 0 18px !important;
+
+    border-radius: 8px !important;
+
+    border-color: #2563eb !important;
+
+    color: #2563eb !important;
+
+    font-weight: 600 !important;
+
+    text-transform: none !important;
+}
+
+
+.choose-image-btn:hover {
+    background: #eff6ff !important;
+
+    border-color: #1d4ed8 !important;
+
+    color: #1d4ed8 !important;
+}
+
+
+/* ==========================================
+   SELECTED IMAGE NAME
+========================================== */
+
+.selected-image-text {
+    margin-top: 8px !important;
+
+    color: #64748b;
+
+    font-size: 13px !important;
+
+    max-width: 90%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* ==========================================
+   FORM
+========================================== */
+
+.edit-form {
+    margin-top: 5px;
+}
+
+
+/* ==========================================
+   ACTION BUTTON CONTAINER
+========================================== */
+
+.edit-action-buttons {
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 5px;
+}
+
+
+/* ==========================================
+   CANCEL
+========================================== */
+
+.cancel-edit-btn {
+    min-width: 110px !important;
+
+    height: 42px !important;
+
+    padding: 0 20px !important;
+
+    border-radius: 8px !important;
+
+    border-color: #cbd5e1 !important;
+
+    color: #475569 !important;
+
+    font-size: 14px !important;
+
+    font-weight: 600 !important;
+
+    text-transform: none !important;
+}
+
+
+.cancel-edit-btn:hover {
+    background: #f8fafc !important;
+
+    border-color: #94a3b8 !important;
+
+    color: #334155 !important;
+}
+
+
+/* ==========================================
+   UPDATE EMPLOYEE
+========================================== */
+
+.update-employee-btn {
+    min-width: 160px !important;
+
+    height: 42px !important;
+
+    padding: 0 20px !important;
+
+    border-radius: 8px !important;
+
+    background: #16a34a !important;
+
+    color: #ffffff !important;
+
+    font-size: 14px !important;
+
+    font-weight: 600 !important;
+
+    text-transform: none !important;
+
+    box-shadow: none !important;
+}
+
+
+.update-employee-btn:hover {
+    background: #15803d !important;
+
+    box-shadow:
+        0 3px 8px rgba(22, 163, 74, 0.25) !important;
+}
+
+
+.update-employee-btn:disabled {
+    background: #86efac !important;
+
+    color: #ffffff !important;
+}
+
+
+/* ==========================================
+   NOT FOUND / ERROR PAGE
+========================================== */
+
+.edit-page-state {
+    width: 100%;
+
+    max-width: 600px;
+
+    margin: 80px auto;
+
+    padding: 40px 30px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ==========================================
+   BACK TO EMPLOYEES
+========================================== */
+
+.edit-back-btn {
+    height: 42px !important;
+
+    padding: 0 20px !important;
+
+    border-radius: 8px !important;
+
+    border-color: #cbd5e1 !important;
+
+    color: #475569 !important;
+
+    font-size: 14px !important;
+
+    font-weight: 600 !important;
+
+    text-transform: none !important;
+}
+
+
+.edit-back-btn:hover {
+    background: #f8fafc !important;
+
+    border-color: #94a3b8 !important;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 700px) {
+
+    .edit-employee-page {
+        padding: 5px 0 30px;
+    }
+
+
+    .edit-employee-card {
+        border-radius: 10px !important;
+    }
+
+
+    .edit-action-buttons {
+        justify-content: stretch;
+
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+
+    .cancel-edit-btn,
+    .update-employee-btn {
+        width: 100% !important;
+    }
+
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 450px) {
+
+    .edit-profile-avatar {
+        width: 100px !important;
+
+        height: 100px !important;
+    }
+
+
+    .edit-page-state {
+        width: 94%;
+
+        margin: 50px auto;
+
+        padding: 30px 20px;
+    }
+
+}
