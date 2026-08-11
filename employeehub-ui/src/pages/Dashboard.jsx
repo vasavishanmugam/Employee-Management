@@ -1,184 +1,313 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import DashboardHeader from "../components/dashboard/DashboardHeader";
-import DashboardStats from "../components/dashboard/DashboardStats";
-import RecentEmployees from "../components/dashboard/RecentEmployees";
-import SalaryChart from "../components/SalaryChart";
+import PeopleIcon from "@mui/icons-material/People";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 
 import api from "../services/api";
+import RecentEmployees from "../components/dashboard/RecentEmployees";
+import "./Dashboard.css";
 
 function Dashboard() {
-
-    const [dashboard, setDashboard] = useState({
-        totalEmployees: 0,
-        highestSalary: 0,
-        lowestSalary: 0,
-        averageSalary: 0
-    });
+    const navigate = useNavigate();
 
     const [employees, setEmployees] = useState([]);
-
     const [loading, setLoading] = useState(true);
 
-
-    async function fetchDashboard() {
-
-        try {
-
-            const response = await api.get(
-                "/employees/dashboard"
-            );
-
-            setDashboard(
-                response.data.data
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Failed to fetch dashboard:",
-                error
-            );
-
-        }
-    }
-
-
-    async function fetchEmployees() {
-
-        try {
-
-            const response = await api.get(
-                "/employees/filter?name=&page=0&size=5&sort=name,asc"
-            );
-
-            setEmployees(
-                response.data.data.content
-            );
-
-        } catch (error) {
-
-            console.error(
-                "Failed to fetch employees:",
-                error
-            );
-
-        }
-    }
-
-
-    async function loadDashboard() {
-
-        try {
-
-            setLoading(true);
-
-            await Promise.all([
-                fetchDashboard(),
-                fetchEmployees()
-            ]);
-
-        } finally {
-
-            setLoading(false);
-
-        }
-    }
-
-
-    async function deleteEmployee(id) {
-
-        const confirmDelete = window.confirm(
-            "Are you sure you want to delete this employee?"
-        );
-
-        if (!confirmDelete) {
-            return;
-        }
-
-        try {
-
-            await api.delete(
-                `/employees/${id}`
-            );
-
-            alert(
-                "Employee deleted successfully."
-            );
-
-            // Refresh dashboard data
-            await loadDashboard();
-
-        } catch (error) {
-
-            console.error(
-                "Failed to delete employee:",
-                error
-            );
-
-            alert(
-                "Failed to delete employee."
-            );
-        }
-    }
-
-
     useEffect(() => {
-
-        loadDashboard();
-
+        fetchEmployees();
     }, []);
 
+    async function fetchEmployees() {
+        try {
+            const response = await api.get("/employees");
+
+            const result = response.data?.data ?? response.data;
+
+            if (Array.isArray(result)) {
+                setEmployees(result);
+            } else if (Array.isArray(result?.content)) {
+                setEmployees(result.content);
+            } else {
+                setEmployees([]);
+            }
+        } catch (error) {
+            console.error("Failed to fetch employees:", error);
+            setEmployees([]);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const totalEmployees = employees.length;
+
+    const totalSalary = employees.reduce(
+        (total, employee) =>
+            total + Number(employee.salary || 0),
+        0
+    );
+
+    const newEmployees = employees.slice(0, 5);
 
     return (
-        <>
-            <DashboardHeader />
+        <div className="dashboard-page">
 
-            <div style={{ padding: "24px" }}>
-
-                <h2 style={{ marginBottom: "20px" }}>
-                    Dashboard
-                </h2>
-
-
-                {loading ? (
-
+            <div className="dashboard-heading">
+                <div>
+                    <h1>Dashboard</h1>
                     <p>
-                        Loading dashboard...
+                        Welcome back! Here's an overview of your employees.
                     </p>
+                </div>
 
-                ) : (
+                <div className="dashboard-date">
+                    📅 {new Date().toLocaleDateString("en-IN")}
+                </div>
+            </div>
 
-                    <>
+            {/* SUMMARY CARDS */}
 
-                        {/* DASHBOARD CARDS */}
+            <div className="summary-cards">
 
-                        <DashboardStats
-                            dashboard={dashboard}
-                        />
+                <div className="summary-card">
+                    <div className="summary-icon blue">
+                        <PeopleIcon />
+                    </div>
 
+                    <div>
+                        <span>Total Employees</span>
+                        <h2>{totalEmployees}</h2>
+                        <small>Employee count</small>
+                    </div>
+                </div>
 
-                        {/* SALARY CHART */}
+                <div className="summary-card">
+                    <div className="summary-icon green">
+                        <PeopleIcon />
+                    </div>
 
-                        <SalaryChart
-                            employees={employees}
-                            loading={loading}
-                        />
+                    <div>
+                        <span>Active Employees</span>
+                        <h2>—</h2>
+                        <small>Status not configured</small>
+                    </div>
+                </div>
 
+                <div className="summary-card">
+                    <div className="summary-icon purple">
+                        <AccountBalanceWalletIcon />
+                    </div>
 
-                        {/* RECENT EMPLOYEES */}
+                    <div>
+                        <span>Total Salary</span>
+                        <h2>
+                            ₹{totalSalary.toLocaleString("en-IN")}
+                        </h2>
+                        <small>Current payroll</small>
+                    </div>
+                </div>
 
-                        <RecentEmployees
-                            employees={employees}
-                            onDelete={deleteEmployee}
-                        />
+                <div className="summary-card">
+                    <div className="summary-icon orange">
+                        <PersonAddIcon />
+                    </div>
 
-                    </>
+                    <div>
+                        <span>New Employees</span>
+                        <h2>{newEmployees.length}</h2>
+                        <small>This month</small>
+                    </div>
 
-                )}
+                    <button
+                        className="card-view-all"
+                        onClick={() => navigate("/employees")}
+                    >
+                        View All
+                    </button>
+                </div>
 
             </div>
-        </>
+
+            {/* MIDDLE SECTION */}
+
+            <div className="dashboard-middle">
+
+                <div className="dashboard-card overview-card">
+
+                    <div className="card-header">
+                        <div>
+                            <h3>Employees Overview</h3>
+                            <p>Recently added employees</p>
+                        </div>
+
+                        <span className="chart-label">
+                            ● New Employees
+                        </span>
+                    </div>
+
+                    <div className="overview-chart">
+
+                        <div className="chart-grid">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div className="chart-line">
+                            <div className="chart-point p1"></div>
+                            <div className="chart-point p2"></div>
+                            <div className="chart-point p3"></div>
+                            <div className="chart-point p4"></div>
+                            <div className="chart-point p5"></div>
+                            <div className="chart-point p6"></div>
+                        </div>
+
+                        <div className="chart-months">
+                            <span>Mar</span>
+                            <span>Apr</span>
+                            <span>May</span>
+                            <span>Jun</span>
+                            <span>Jul</span>
+                            <span>Aug</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div className="dashboard-card activities-card">
+
+                    <div className="card-header">
+                        <div>
+                            <h3>Recent Activities</h3>
+                            <p>Latest employee activity</p>
+                        </div>
+
+                        <span className="activity-icon">◷</span>
+                    </div>
+
+                    <div className="empty-state">
+                        <div>◷</div>
+                        <h4>Activity tracking</h4>
+                        <p>
+                            Activity history will appear here when
+                            configured.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            {/* BOTTOM SECTION */}
+
+            <div className="dashboard-bottom">
+
+                <div className="dashboard-card recent-card">
+
+                    <div className="card-header">
+                        <div>
+                            <h3>Recent Employees</h3>
+                            <p>Recently added employees</p>
+                        </div>
+
+                        <button
+                            className="card-view-all"
+                            onClick={() => navigate("/employees")}
+                        >
+                            View All →
+                        </button>
+                    </div>
+
+                    {loading ? (
+                        <div className="dashboard-loading">
+                            Loading employees...
+                        </div>
+                    ) : (
+                        <RecentEmployees
+                            employees={employees}
+                            onRefresh={fetchEmployees}
+                        />
+                    )}
+
+                </div>
+
+                <div className="dashboard-right">
+
+                    {/* BIRTHDAYS */}
+
+                    <div className="dashboard-card">
+
+                        <div className="card-header">
+                            <div>
+                                <h3>Upcoming Birthdays</h3>
+                                <p>Employee birthdays</p>
+                            </div>
+
+                            <span>📅</span>
+                        </div>
+
+                        <div className="empty-state small">
+                            <div>📅</div>
+                            <p>
+                                Add a birthday field to display
+                                upcoming birthdays.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    {/* QUICK ACTIONS */}
+
+                    <div className="dashboard-card">
+
+                        <div className="card-header">
+                            <div>
+                                <h3>Quick Actions</h3>
+                                <p>Common tasks</p>
+                            </div>
+                        </div>
+
+                        <div className="quick-actions">
+
+                            <button
+                                className="quick-btn blue-btn"
+                                onClick={() => navigate("/add")}
+                            >
+                                <PersonAddIcon />
+                                Add Employee
+                            </button>
+
+                            <button
+                                className="quick-btn green-btn"
+                                onClick={() => navigate("/employees")}
+                            >
+                                <SearchIcon />
+                                Search Employees
+                            </button>
+
+                            <button
+                                className="quick-btn purple-btn"
+                                onClick={() => navigate("/upload")}
+                            >
+                                <UploadFileIcon />
+                                Upload Files
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
     );
 }
 
